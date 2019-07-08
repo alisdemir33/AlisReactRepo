@@ -33,6 +33,7 @@ class CounterMainClass extends React.Component
        if(this.state.sayac1>0)
        sayacTemp=sayacTemp-1;
        
+        var sayac2temp=this.state.sayac2;
         this.setState({           
             sayac1 : sayacTemp,
             sayac2  :this.state.sayac2+1
