@@ -29,8 +29,12 @@ class CounterMainClass extends React.Component
  
 
     sayac2Artir () {
-        this.setState({
-            sayac1 : this.state.sayac1-1,
+       var sayacTemp=this.state.sayac1;
+       if(this.state.sayac1>0)
+       sayacTemp=sayacTemp-1;
+       
+        this.setState({           
+            sayac1 : sayacTemp,
             sayac2  :this.state.sayac2+1
         })
     }     
