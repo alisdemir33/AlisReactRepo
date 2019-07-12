@@ -1,5 +1,4 @@
 {
-  "homepage" :"https://github.com/alisdemir33/AlisReactRepo.git",
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [
@@ -9,11 +8,6 @@
       "type": "image/x-icon"
     }
   ],
-  "scripts": {
-
-    "predeploy": "npm run build",
-    "deploy": "my-app -d build"
-  },
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

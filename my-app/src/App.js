@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+ 
 
-function App() {
+/* function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +22,45 @@ function App() {
       </header>
     </div>
   );
+} */
+
+var data = {
+  content: {
+      people: [
+        {
+          name: "Test",
+          age : 24
+        },
+        {
+          name: "Foo",
+          age: 25
+        }
+      ],
+      pets: [
+        {
+          name: "Sweety",
+          age: 3
+        },
+        {
+          name: "Kitty",
+          age: 5
+        }
+      ]
+   }
+};
+
+function Hi (){
+
+      //Get the keys in data.content. This will return ['people', 'pets']
+      var contentKeys = Object.keys(data.content);
+     // alert(contentKeys)
+      //Now start iterating through these keys and use those keys to
+      //retrieve the underlying arrays and then extract the name field
+      var allNames = contentKeys.map((t) => 
+                         data.content[t].map((e) =>
+                          (<div>{e.name} {e.age}</div>))
+                         );  
+      return (<div>{allNames}</div>)  
 }
 
-export default App;
+export default Hi;
