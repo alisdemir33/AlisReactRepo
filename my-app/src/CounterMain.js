@@ -1,5 +1,5 @@
 import React from 'react'
-import CounterSub from './counterSub';
+import CounterSub from './CounterSub';
 import Room from './Lamb';
 import Reddit from './Reddit';
 import 'bootstrap/dist/css/bootstrap.min.css';
