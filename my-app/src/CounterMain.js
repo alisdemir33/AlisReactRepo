@@ -2,10 +2,14 @@ import React from 'react'
 import CounterSub from './CounterSub';
 import Room from './Lamb';
 import Reddit from './Reddit';
+/* import ThemeSwitcher from './themeSwitcher' */
+import ThemeSwitcher from './ReactStrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Glyphicon } from 'react-bootstrap';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 class CounterMainClass extends React.Component {
 
@@ -55,9 +59,14 @@ class CounterMainClass extends React.Component {
                 </div>
             </div>
 
-            <div className="card bg-warning text-blue">
+           {/*  <div className="card bg-warning text-blue">
                 <div className="card-body">
                     <Reddit />
+                </div>
+            </div> */}
+               <div className="card bg-warning text-blue">
+                <div className="card-body">
+                    <ThemeSwitcher />
                 </div>
             </div>
         </div>;

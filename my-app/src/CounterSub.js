@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 class CounterSub    extends React.Component
 {      
 
@@ -12,6 +13,7 @@ render ()
     
     <button className={this.props.cls} onClick={this.props.artir}> Sayaca Tıklasana
     </button>
+    <span class="glyphicon glyphicon-search"></span>
     </div>
  ;
 

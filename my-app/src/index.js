@@ -4,15 +4,16 @@ import './index.css';
 import Hi from './App';
 import MerhabaDunya from './Merhaba'
 import Selamlama from './Selamlama'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import CounterMainClass from './CounterMain.js'
 import Room from './Lamb.js'
 import Reddit from './Reddit.js'
-
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import $ from 'jquery';
 import Popper from 'popper.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 /* ReactDOM.render(<Hi/>, document.getElementById('root'));
 
