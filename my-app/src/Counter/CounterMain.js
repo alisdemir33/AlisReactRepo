@@ -1,9 +1,9 @@
 import React from 'react'
 import CounterSub from './CounterSub';
-import Room from './Lamb';
-import Reddit from './Reddit';
+import Room from '../LambRoom/Lamb';
+import Reddit from '../Reddit/Reddit';
 /* import ThemeSwitcher from './themeSwitcher' */
-import ThemeSwitcher from './ReactStrap'
+import ThemeSwitcher from '../ThemeSelector/ReactStrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Glyphicon } from 'react-bootstrap';
 import $ from 'jquery';
@@ -52,23 +52,23 @@ class CounterMainClass extends React.Component {
                 </div>
             </div>
 
-            <div className="card bg- text-blue">
+         {/*    <div className="card bg- text-blue">
             <div class="card-header">ODA</div>
                 <div className="card-body">
                     <Room />
                 </div>
             </div>
 
-           {/*  <div className="card bg-warning text-blue">
+            <div className="card bg-warning text-blue">
                 <div className="card-body">
                     <Reddit />
                 </div>
-            </div> */}
+            </div>
                <div className="card bg-warning text-blue">
                 <div className="card-body">
                     <ThemeSwitcher />
                 </div>
-            </div>
+            </div> */}
         </div>;
     }
 

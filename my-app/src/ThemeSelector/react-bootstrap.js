@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { SplitButton,DropdownItem } from 'react-bootstrap';
 
-
-
-
- class ThemeSwitcher extends Component {
+ class ReactBootstrapThemeSwitcher extends Component {
 
   state = { theme: null }
   
@@ -58,4 +55,4 @@ import { SplitButton,DropdownItem } from 'react-bootstrap';
   
 }
 
-export default ThemeSwitcher;
+export default ReactBootstrapThemeSwitcher;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-class ThemeSwitcher extends Component {
+class ReactStrapThemeSwitcher extends Component {
 
   state = { theme: null, dropdownOpen: false }
   
@@ -48,4 +48,4 @@ class ThemeSwitcher extends Component {
   
 }
 
-export default ThemeSwitcher;
+export default ReactStrapThemeSwitcher;
