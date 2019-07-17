@@ -17,13 +17,14 @@ import * as serviceWorker from './serviceWorker';
 import $ from 'jquery';
 import Popper from 'popper.js';
 
-ReactDOM.render(<ThemeMain/>, document.getElementById('root'));
+ReactDOM.render(<Selamlama/>, document.getElementById('root'));
 
+/* ReactDOM.render(<ThemeMain/>, document.getElementById('root')); */
 /* ReactDOM.render(<CounterMainClass/> ,document.getElementById('root')); */
 
-/* ReactDOM.render(<Hi/>, document.getElementById('root'));
+/* 
 ReactDOM.render(<MerhabaDunya/>, document.getElementById('root')); 
-ReactDOM.render(<Selamlama/>, document.getElementById('root'));
+ReactDOM.render(<Hi/>, document.getElementById('root')); 
 ReactDOM.render(<Reddit/>, document.getElementById('root'));
  ReactDOM.render(<Room/> ,document.getElementById('root')); */
 
