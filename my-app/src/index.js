@@ -8,6 +8,9 @@ import CounterMainClass from './Counter/CounterMain'
 import Room from './LambRoom/Lamb'
 import Reddit from './Reddit/Reddit'
 import ThemeMain from './ThemeSelector/ThemeMain'
+import WeatherWidget from './Weather/weatherwidget'
+import WeatherApp from './ekene/WeatherApp'
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -17,7 +20,7 @@ import * as serviceWorker from './serviceWorker';
 import $ from 'jquery';
 import Popper from 'popper.js';
 
-ReactDOM.render(<Selamlama/>, document.getElementById('root'));
+ReactDOM.render(<WeatherApp/>, document.getElementById('root'));
 
 /* ReactDOM.render(<ThemeMain/>, document.getElementById('root')); */
 /* ReactDOM.render(<CounterMainClass/> ,document.getElementById('root')); */

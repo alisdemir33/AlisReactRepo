@@ -37,9 +37,9 @@ class Selamlama extends React.Component {
     //Now start iterating through these keys and use those keys to
     //retrieve the underlying arrays and then extract the name field
     var allNames = contentKeys.map((t) =>
-      data.content[t].map((e) => 
-      //   {e.name}
-      (<MerhabaDunya isim={e.name} yas={e.age}/>))
+      data.content[t].map((e) =>     
+      (<MerhabaDunya isim={e.name} yas={e.age}/>)
+      )
     );
 
     return (
