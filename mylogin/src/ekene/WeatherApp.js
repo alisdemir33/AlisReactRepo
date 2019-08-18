@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class WeatherApp extends React.Component {
 
     constructor(props) {
+        console.log('weather worked..')
         super(props);
         this.getWeather = this.getWeather.bind(this);
 

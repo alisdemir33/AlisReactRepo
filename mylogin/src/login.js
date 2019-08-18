@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Auth from './auth';
+
+import {BrowserRouter as Router, Route,Redirect,withRouter} from 'react-router-dom'
 import { Container, Col, Form, FormGroup, Label, Input, Button, FormText, FormFeedback } from 'reactstrap';
 
 class Login extends React.Component {
@@ -10,14 +12,14 @@ class Login extends React.Component {
 
     super(props);
     this.state = {
-      'email': '',
+      email: '',
       password: '',
       validate: {
         emailState: ''
       },
       redirectToReferrer:false
     }
-
+console.log(props);
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange = async (event) => {
@@ -29,7 +31,8 @@ class Login extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
-    if(this.state.email== 'a@a.com' && this.state.password=='1'){
+    
+    if(this.state.email=== 'a@a.com' && this.state.password==='1'){
       Auth.login(() => {
         this.setState(() => ({
           redirectToReferrer: true
@@ -55,6 +58,25 @@ class Login extends React.Component {
   }
 
   render() {
+    
+    console.log(this.props);
+    //const { from } = this.props.location.state || { from: { pathname: '/' } } 
+    //const {ftom}= this.props.ftom;
+    const { from } = this.props.redirectedFrom || { redirectedFrom: { pathname: '/' } };
+    const { redirectToReferrer } = this.state
+    
+    console.log(this.state);
+   // console.log(this.props);
+    console.log(from);
+    if (redirectToReferrer === true) {
+      alert(this.props.redirectedFrom+' --- '+this.props.redirectedFrom+'***'+ `${this.props.redirectedFrom}`)
+      /*  return <Redirect to ={`${this.props.ftom}`} />  */
+      this.props.history.push(`${this.props.redirectedFrom}`);
+      return <Redirect to = {this.props.redirectedFrom} /> 
+
+    /*  return <Redirect to ='/WeatherRoute' /> */
+    }
+    
     return (
       <Container className="App">
         <h2>Sign In</h2>
@@ -85,7 +107,7 @@ class Login extends React.Component {
               <Input type="password"
                 name="password"
                 id="examplePassword"
-                placeHolder="Enter Your Password"
+                placeholder="Enter Your Password"
                 onChange={(e) => this.handleChange(e)}
               />
             </FormGroup>
@@ -98,4 +120,4 @@ class Login extends React.Component {
 }
 
 
-export default Login;
+export default withRouter(Login);

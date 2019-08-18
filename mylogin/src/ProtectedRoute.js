@@ -9,19 +9,20 @@ export const ProtectedRoute = ({
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props) => {
         
         alert(Auth.isAuthenticated());
-        
+        console.log(props);
+          alert(props.location.pathname)
         if (Auth.isAuthenticated()) {          
             return <Component {...props} />;
         } else {
           return (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: "/RedirectToLogin",
                 state: {
-                  from: props.location
+                  from: props.location.pathname
                 }
               }}
             />
