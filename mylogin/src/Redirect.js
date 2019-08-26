@@ -1,4 +1,5 @@
-
+import {ProtectedRoute} from './ProtectedRoute'
+import WeatherApp from './ekene/WeatherApp';
 import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
@@ -25,7 +26,7 @@ class RedirectToLogin extends Component {
             <hr/>
            {/* <Route exact path="/login" component={Login} from={this.props.history.location.state.from}/>   */}        
            <Route exact path="/login" render={(props) => (<Login redirectedFrom={this.props.location.state.from}/>)} />        
-           
+          {/*  <ProtectedRoute exact path='/WeatherRoute' component={WeatherApp} /> */}
           </div>
         </Router>
       )

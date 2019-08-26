@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Auth from './auth';
 
+
 import {BrowserRouter as Router, Route,Redirect,withRouter} from 'react-router-dom'
 import { Container, Col, Form, FormGroup, Label, Input, Button, FormText, FormFeedback } from 'reactstrap';
 
@@ -71,9 +72,11 @@ console.log(props);
     if (redirectToReferrer === true) {
       alert(this.props.redirectedFrom+' --- '+this.props.redirectedFrom+'***'+ `${this.props.redirectedFrom}`)
       /*  return <Redirect to ={`${this.props.ftom}`} />  */
-      this.props.history.push(`${this.props.redirectedFrom}`);
-      return <Redirect to = {this.props.redirectedFrom} /> 
-
+      debugger
+     this.props.history.push(`${this.props.redirectedFrom}`);
+   /*  return <Redirect push to = {this.props.location.state.from} />    */
+  /*   return <Redirect push to = {this.props.redirectedFrom} /> 
+ */
     /*  return <Redirect to ='/WeatherRoute' /> */
     }
     

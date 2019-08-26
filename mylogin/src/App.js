@@ -35,6 +35,7 @@ class App extends Component {
               <ProtectedRoute exact path='/WeatherRoute' component={WeatherApp} />
 
               <Route path='*' component={Contact} />
+               
           </Switch>
         </div>
       </Router>

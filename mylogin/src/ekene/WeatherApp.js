@@ -4,6 +4,7 @@ import Titles from './Title';
 import WeatherForm from './form';
 import '.././WeatherApp.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {withRouter} from 'react-router-dom';
 
 class WeatherApp extends React.Component {
 
@@ -79,4 +80,4 @@ class WeatherApp extends React.Component {
     }
 }
 
-export default WeatherApp;
+export default withRouter(WeatherApp);

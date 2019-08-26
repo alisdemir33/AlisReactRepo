@@ -20,7 +20,8 @@ export const ProtectedRoute = ({
           return (
             <Redirect
               to={{
-                pathname: "/RedirectToLogin",
+             pathname: "/RedirectToLogin", 
+              /*  pathname:'/login', */
                 state: {
                   from: props.location.pathname
                 }
