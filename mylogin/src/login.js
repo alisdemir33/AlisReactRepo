@@ -66,18 +66,19 @@ console.log(props);
     const { from } = this.props.redirectedFrom || { redirectedFrom: { pathname: '/' } };
     const { redirectToReferrer } = this.state
     
-    console.log(this.state);
+   // console.log(this.state);
    // console.log(this.props);
-    console.log(from);
+   // console.log(from);
     if (redirectToReferrer === true) {
-      alert(this.props.redirectedFrom+' --- '+this.props.redirectedFrom+'***'+ `${this.props.redirectedFrom}`)
+     // alert(this.props.redirectedFrom+' --- '+this.props.redirectedFrom+'***'+ `${this.props.redirectedFrom}`)
       /*  return <Redirect to ={`${this.props.ftom}`} />  */
       debugger
-     this.props.history.push(`${this.props.redirectedFrom}`);
-   /*  return <Redirect push to = {this.props.location.state.from} />    */
-  /*   return <Redirect push to = {this.props.redirectedFrom} /> 
- */
-    /*  return <Redirect to ='/WeatherRoute' /> */
+      console.log(this.props);
+    /*  this.props.history.push(`${this.props.redirectedFrom}`); */
+     return <Redirect push to = {this.props.location.redirectAfterLogin.comingFrom} />    
+  /*   return <Redirect push to = {this.props.redirectedFrom} /> */
+ 
+   
     }
     
     return (
