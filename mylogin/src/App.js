@@ -8,6 +8,7 @@ import Contact from './Contact';
 import Public from './startup';
 import NestedRoute from './nestedroute';
 import RedirectToLogin from './Redirect';
+import StarRating from './StarRating';
 
 class App extends Component {
   render() {
@@ -22,18 +23,17 @@ class App extends Component {
             <li><Link to={'/nested'} className="nav-link">Nested Roots</Link> </li>
             <li><Link to={'/contact'} className="nav-link">Contact</Link></li>
            <li><Link to= {'/'} className="nav-link"> Public Page</Link> </li>
-
+           <li><Link to ={'/StarRating'} className="nav-link">Star</Link> </li>
           </ul>
           </nav>
           <hr />
           <Switch>
               <Route exact path='/login' component={Login} />             
               <Route exact path="/" component={Public}/>
-              <Route exact path='/RedirectToLogin' component={RedirectToLogin} />   
-
+              <Route exact path='/RedirectToLogin' component={RedirectToLogin} />
               <Route exact path ='/nested' component={NestedRoute}/>
               <ProtectedRoute exact path='/WeatherRoute' component={WeatherApp} />
-
+              <Route exact path='/StarRating' component={StarRating} />
               <Route path='*' component={Contact} />
                
           </Switch>
