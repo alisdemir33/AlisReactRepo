@@ -25,19 +25,20 @@ class StarRating extends React.Component {
         if (city==0 && country==0) {
 
          //   const Api_Key = '4367fe3bd34c13c1ec198b485cff42ae';
-            const api_call = await fetch(`http://localhost:1135/api/Values/2`);
+            const api_call = await fetch(`http://localhost:3993/api/Values`);
             response = await api_call.json();
             alert(response)   ;
             console.log(response.value);
+            if(response>0){
             this.setState({
-                rating:response
-               /*  temperature: response.main.temp,
-                city: response.name,
-                country: response.sys.country,
-                humidity: response.main.humidity,
-                description: response.weather[0].description,
-                error: "" */
+                rating:response             
             })
+            }else
+            {
+                this.setState({
+                    rating:3             
+                })
+            }
         } else {
             this.setState({
                 rating: 9
