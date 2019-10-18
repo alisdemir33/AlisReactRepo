@@ -90,13 +90,13 @@ body {
   padding-left: 50px;
 }
 
-input[type="text"] {
+input[type="textCustom"] {
   background-color: transparent;
   border: 0;
   border-bottom: solid 1px #f16051;
   width: 30%;
   padding-bottom: 4px;
-  color: #fff !important;
+  color: black !important;
   font-weight: lighter;
   letter-spacing: 2px;
   margin-bottom: 30px;
@@ -108,10 +108,10 @@ input[type="text"] {
     outline: none;
 }
 
-input:-webkit-autofill {
+/* input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px #2c3e50 inset;
     -webkit-text-fill-color: #fff !important;
-}
+} */
 
 button {
   border: 0;
