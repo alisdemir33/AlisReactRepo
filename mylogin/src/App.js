@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import {ProtectedRoute} from './ProtectedRoute'
 import Login from './login';
 import WeatherApp from './ekene/WeatherApp';
-import Contact from './Contact';
+import Contact from './Vakif/Contact';
 import Public from './startup';
 import NestedRoute from './nestedroute';
 import RedirectToLogin from './Redirect';
@@ -21,7 +21,7 @@ class App extends Component {
             <li><Link to={'/login'} className="nav-link"> Login </Link></li>           
             <li><Link to={'/WeatherRoute'} className="nav-link">Weather</Link></li>
             <li><Link to={'/nested'} className="nav-link">Nested Roots</Link> </li>
-            <li><Link to={'/contact'} className="nav-link">Contact</Link></li>
+            <li><Link to={'/Vakif/contact'} className="nav-link">Contact</Link></li>
            <li><Link to= {'/'} className="nav-link"> Public Page</Link> </li>
            <li><Link to ={'/StarRating'} className="nav-link">Star</Link> </li>
           </ul>
