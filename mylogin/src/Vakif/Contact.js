@@ -21,11 +21,11 @@ class Contact extends Component {
 
     let pageSize = 10;
     let cityNameGlob = '';
-    let api_call=null;
-    let response=null;
+    let api_call = null;
+    let response = null;
 
     if (e != null && e != undefined) {
-    
+
       e.preventDefault();
 
       pageSize = e.target.elements.PageSize.value;
@@ -33,24 +33,35 @@ class Contact extends Component {
 
       if (cityNameGlob != '') {
 
-        this.setState({ cityName: cityNameGlob }, () =>
+        fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${cityNameGlob}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`)
+          .then(response => response.json())
+          .then(data => this.setState({
+            cityName: cityNameGlob,
+            vakifList: response
+          }));
+      } else {
+        fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`)
+          .then(response => response.json())
+          .then(data => this.setState({
+            vakifList: response
+          }));
+      }
+      console.log(response);
 
-          api_call =  fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`),
-          response =  api_call.json()    
-        );
-      }else{
-        api_call = fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
-        response = api_call.json();
-      }     
-    } 
-    
-    this.setState({
-      vakifList: response
-    })  
-     
-      /*  const api_call = await fetch(`http://172.16.200.121:8001/api/Values/GetVakifListByPaging?filter=${cityName}&pageNumber=${pageNumber}&pageSize=${pageSize}`); 
-      const api_call = await fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
-      response = await api_call.json(); */   
+      /*        
+             this.setState({ cityName: cityNameGlob }, () =>
+               api_call =  fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`),
+               response =  api_call.json()    
+             );
+           }else{
+             api_call = fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
+             response = api_call.json();
+           }
+            
+           const api_call = await fetch(`http://172.16.200.121:8001/api/Values/GetVakifListByPaging?filter=${cityName}&pageNumber=${pageNumber}&pageSize=${pageSize}`); 
+           const api_call = await fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
+           response = await api_call.json(); */
+    }
   }
 
 
