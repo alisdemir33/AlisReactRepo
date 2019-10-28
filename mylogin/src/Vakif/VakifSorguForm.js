@@ -32,6 +32,9 @@ const VakifForm = (props) => {
                         </FormGroup>
                     </Col>
                 </Row>
+                <Row> <Col lg="3" md="6">
+                    </Col>
+                </Row>
             </Form>
         </Container>
     )

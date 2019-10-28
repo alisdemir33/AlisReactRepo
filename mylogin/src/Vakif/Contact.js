@@ -3,61 +3,89 @@ import React, { Component } from 'react';
 import { isTSMethodSignature } from '@babel/types';
 import VakifList from './VakifInfo';
 import VakifForm from './VakifSorguForm';
+import ReactPaginate from 'react-paginate';
 
 class Contact extends Component {
 
   constructor() {
     super();
     this.state = {
-      vakifList: []
+      vakifList: null,
+      cityName: ''
     }
   }
+
+  pageNumber = 1;
 
   getVakifListFromServer = async (e) => {
-    //alert('1');
-    e.preventDefault();
+
     let pageSize = 10;
-    let pageNumber = 1;
+    let cityNameGlob = '';
+    let api_call=null;
+    let response=null;
 
-    let cityName = e.target.elements.City.value;
-    console.log(e);
-    alert(cityName);
-    pageSize = e.target.elements.PageSize.value;
-    pageNumber = e.target.elements.PageNumber.value;
+    if (e != null && e != undefined) {
+    
+      e.preventDefault();
 
-    if (pageSize == null ||  pageSize =='')
-      pageSize = 10;
+      pageSize = e.target.elements.PageSize.value;
+      cityNameGlob = e.target.elements.City.value;
 
-    if (pageNumber == null || pageNumber=='')
-      pageNumber = 1;
+      if (cityNameGlob != '') {
 
-    console.log(e);
-    var response = null;
-    alert(pageSize+' '+pageNumber);
-    if (pageSize != null && pageSize > 0 && pageNumber != null && pageNumber >= 0) {
+        this.setState({ cityName: cityNameGlob }, () =>
 
-      const api_call = await fetch(`http://172.16.200.121:8001/api/Values/GetVakifListByPaging?filter=${cityName}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
-      response = await api_call.json();
-      console.log(response.value);
-      this.setState({
-        vakifList: response
-      })
-    } else {
-      this.setState({
-        vakifList: null
-      })
-    }
+          api_call =  fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`),
+          response =  api_call.json()    
+        );
+      }else{
+        api_call = fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
+        response = api_call.json();
+      }     
+    } 
+    
+    this.setState({
+      vakifList: response
+    })  
+     
+      /*  const api_call = await fetch(`http://172.16.200.121:8001/api/Values/GetVakifListByPaging?filter=${cityName}&pageNumber=${pageNumber}&pageSize=${pageSize}`); 
+      const api_call = await fetch(`http://localhost:1135/api/Values/GetVakifListByPagedList?filter=${this.state.cityName}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`);
+      response = await api_call.json(); */   
   }
+
+
+  handlePageClick = data => {
+    this.pageNumber = data.selected;
+    this.getVakifListFromServer();
+  };
+
+
 
   render() {
 
     const { vakifList } = this.state;
     return (
       <div>
-        <h2>SYD Vakıf Listesi Vakıf Sayısı :{vakifList == null ? 0 : vakifList.length}</h2>
+        <h2>SYD Vakıf Listesi Vakıf Sayısı :{vakifList == null ? 0 : vakifList.RecordCount}</h2>
         {/*  <ul>{list}</ul> */}
+
         <VakifForm getVakifListFromServerFunction={this.getVakifListFromServer} />
+        <div><h2>Active Filters: {this.state.cityName === null || this.state.cityName === '' ? '' : 'City Name:' + this.state.cityName}</h2></div>
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={vakifList == null ? 0 : vakifList.PagedListMetaData.PageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
         <VakifList vakifList={vakifList} />
+
         {/*  <button className="btn btn-info" onClick={this.getVakifListFromServer}> FLİP </button> */}
       </div>
 

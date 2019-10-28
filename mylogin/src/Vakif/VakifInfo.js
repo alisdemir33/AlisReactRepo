@@ -11,8 +11,10 @@ const VakifList = (props) => {
 
   // alert( props +' '+ props.vakifList);
   console.log(props.vakifList);
+let list2='';
+  if(props.vakifList!= null){
 
-  const list2 = props.vakifList.map((item, key) =>
+  list2 = props.vakifList.InnerList.map((item, key) =>
 
     <tr key={item.VAKIF_ILCESI}>
       <th scope="row">{key + 1}</th>
@@ -29,6 +31,8 @@ const VakifList = (props) => {
       <td>{item.VAKIF_IP_TEL_NO}</td>
       <td>{item.VAKIF_FAX_NO}</td>
     </tr>);
+
+  }
 
   return (   
   <div>
