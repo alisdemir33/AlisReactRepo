@@ -4,7 +4,8 @@ import Titles from './Title';
 import WeatherForm from './form';
 import '.././WeatherApp.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { thisExpression } from '@babel/types';
 
 class WeatherApp extends React.Component {
 
@@ -19,7 +20,8 @@ class WeatherApp extends React.Component {
             country: undefined,
             humidity: undefined,
             description: undefined,
-            error: undefined
+            error: undefined,
+            isLoading: false,
         }
     }
 
@@ -32,17 +34,29 @@ class WeatherApp extends React.Component {
         if (city && country) {
 
             const Api_Key = '4367fe3bd34c13c1ec198b485cff42ae';
-            const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${Api_Key}`);
-            response = await api_call.json();
+            //const api_call = await 
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${Api_Key}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Bilinmeyen hata oluştu!')
+                    }
+                })
+                .then(response => {
+                    this.setState({
+                        temperature: response.main.temp,
+                        city: response.name,
+                        country: response.sys.country,
+                        humidity: response.main.humidity,
+                        description: response.weather[0].description,
+                        error: ""
+                    })
+                })
+                .catch(error => this.setState({ error, isLoading: false }));
+            // response = await api_call.json();
 
-            this.setState({
-                temperature: response.main.temp,
-                city: response.name,
-                country: response.sys.country,
-                humidity: response.main.humidity,
-                description: response.weather[0].description,
-                error: ""
-            })
+
         } else {
             this.setState({
                 error: "Please enter the values..."
@@ -53,6 +67,15 @@ class WeatherApp extends React.Component {
     }
 
     render() {
+        const { hits, isLoading, error } = this.state;
+        if (error) {
+            return <p>{error.message}</p>;
+        }
+
+        if (isLoading) {
+            return <p>Loading ...</p>;
+        }
+
         return <div>
             <div className="wrapper">
                 <div className="main">
