@@ -10,7 +10,7 @@ const VakifForm = (props) => {
                 <Row>
                     <Col lg="3" md="6">
                         <FormGroup>
-                            <Label>Vakıf İli</Label><Input type="text" name="City" placeholder="İl.." />
+                            <Label>Vakıf İli</Label><Input type="text" name="CityName" placeholder="İl.." />
                         </FormGroup>
                     </Col>
                     <Col lg="3" md="6">
@@ -20,7 +20,7 @@ const VakifForm = (props) => {
                     </Col>
                     <Col lg="3" md="6">
                         <FormGroup>
-                            <Label>Sayfa No</Label>  <Input type="text" name="PageNumber" placeholder="Sayfa No" />
+                            <Label>Sayfa No</Label>  <Input type="text" name="FoundationName" placeholder="Sayfa No" />
                         </FormGroup>
                     </Col>
 
