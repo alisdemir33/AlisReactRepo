@@ -13,6 +13,7 @@ const VakifList = (props) => {
   console.log(props.vakifList);
 let list2='';
   if(props.vakifList!= null){
+debugger;
 
   list2 = props.vakifList.InnerList.map((item, key) =>
 
