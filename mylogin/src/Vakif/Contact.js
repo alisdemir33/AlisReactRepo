@@ -48,7 +48,7 @@ class Contact extends Component {
         foundationNameGlob = this.state.foundationName;
       }
 
-      this.setState({ isLoading: true });
+     // this.setState({ isLoading: true });
 
       console.log(foundationNameGlob, cityNameGlob);
 
