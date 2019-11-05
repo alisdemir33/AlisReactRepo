@@ -12,7 +12,7 @@ class Contact extends Component {
     super();
     this.state = {
       vakifList: null,
-      cityName: '',
+      ProvinceName: '',
       foundationName: '',
       isLoading: false,
       errorStatus:false
@@ -25,7 +25,7 @@ class Contact extends Component {
   getVakifListFromServer(e) {
 
     let pageSize = 10;
-    let cityNameGlob = '';
+    let ProvinceNameGlob = '';
     let foundationNameGlob = '';
     let api_call = null;
     let response = null;
@@ -37,28 +37,28 @@ class Contact extends Component {
       if (e.target.elements.PageSize.value != '')
         pageSize = e.target.elements.PageSize.value;
 
-      if (e.target.elements.CityName.value != '') {
-        cityNameGlob = e.target.elements.CityName.value;
+      if (e.target.elements.ProvinceName.value != '') {
+        ProvinceNameGlob = e.target.elements.ProvinceName.value;
       } else {
-        cityNameGlob = this.state.cityName;
+        ProvinceNameGlob = this.state.ProvinceName;
       }
 
-      if (e.target.elements.FoundationName.value != '') {
-        foundationNameGlob = e.target.elements.FoundationName.value;
+      if (e.target.elements.CountyName.value != '') {
+        foundationNameGlob = e.target.elements.CountyName.value;
       } else {
         foundationNameGlob = this.state.foundationName;
       }
 
      // this.setState({ isLoading: true });
 
-      console.log(foundationNameGlob, cityNameGlob);
+      console.log(foundationNameGlob, ProvinceNameGlob);
 
-      axios.get(`http://localhost:1135/api/Values/GetVakifListByPagedList?cityFilter=${cityNameGlob}&foundationFilter=${foundationNameGlob}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`)
+      axios.get(`http://localhost:3993/api/Values/GetVakifListByPagedList?cityFilter=${ProvinceNameGlob}&foundationFilter=${foundationNameGlob}&pageNumber=${this.pageNumber}&pageSize=${pageSize}`)
         .then(response =>
           this.setState({
             vakifList: { PagedListMetaData: response.data.PagedListMetaData, InnerList: response.data.InnerList },
             isLoading: false,
-            cityName: cityNameGlob,
+            ProvinceName: ProvinceNameGlob,
             foundationName: foundationNameGlob,
             errorStatus:false
           }, () => {
@@ -89,22 +89,22 @@ class Contact extends Component {
     }
     else {
 
-      if (error) {
+      if (this.state.errorStatus) {
         return (
           <h1>No Data Found..!</h1>
         );
       }
 
       if (this.state.vakifList != null) {
-        debugger;
+      //  debugger;
         return (
           <div>
-            <h2>SYD Vakıf Listesi Vakıf Sayısı :{vakifList == null ? 0 : vakifList.RecordCount}</h2>
-            {/*  <ul>{list}</ul> */}
+            <h2>SYD Vakıf Listesi Vakıf Sayısı :
+            {vakifList == null ? 0 : this.state.vakifList.PagedListMetaData.RecordCount}</h2>     
 
             <VakifForm getVakifListFromServerFunction={this.getVakifListFromServer} />
-            <div><h2>Active Filters: {this.state.cityName === null || this.state.cityName === '' ? '' : 'City Name:' + this.state.cityName}
-              {this.state.foundationName === null || this.state.foundationName === '' ? '' : 'Foundation Name:' + this.state.foundationName}  </h2></div>
+            <div><h2>Active Filters: {this.state.ProvinceName === null || this.state.ProvinceName === '' ? '' : 'Province Name: ' + this.state.ProvinceName}
+              {this.state.foundationName === null || this.state.foundationName === '' ? '' : '   Foundation Name: ' + this.state.foundationName}  </h2></div>
             <ReactPaginate
               previousLabel={'previous'}
               nextLabel={'next'}

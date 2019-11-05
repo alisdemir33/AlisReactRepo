@@ -13,11 +13,11 @@ const VakifList = (props) => {
   console.log(props.vakifList);
 let list2='';
   if(props.vakifList!= null){
-debugger;
+//debugger;
 
   list2 = props.vakifList.InnerList.map((item, key) =>
 
-    <tr key={item.VAKIF_ILCESI}>
+    <tr key={item.ID}>
       <th scope="row">{key + 1}</th>
       <td><StarRatingComponent
         name="rate1"
@@ -25,12 +25,13 @@ debugger;
         value={(key+1)%5 === 0 ? 5 : (key+1)%5 }
       //onStarClick={this.onStarClick.bind(this)}
       /></td>
-      <td>{item.VAKIF_ILI}</td>
-      <td>{item.VAKIF_ILCESI}</td>
-      <td>{item.VAKIF_ADRESI}</td>
-      <td>{item.VAKIF_TEL_NO}</td>
-      <td>{item.VAKIF_IP_TEL_NO}</td>
-      <td>{item.VAKIF_FAX_NO}</td>
+      <td>{item.FName}</td>
+      <td>{item.ProvinceName}</td>
+      <td>{item.CountyName}</td>
+      <td>{item.Address}</td>
+      <td>{item.Phone}</td>
+      <td>{item.Fax}</td>
+      <td>{item.EMail}</td>
     </tr>);
 
   }
@@ -42,12 +43,13 @@ debugger;
         <tr>
           <th>#</th>
           <th>Reyting</th>
+          <th>Vakıf Adi</th>
           <th>Vakıf İli</th>
           <th>Vakıf İlçesi</th>
           <th>Vakıf Adresi</th>
-          <th>Vakıf Telefon</th>
-          <th>Vakıf IP Telefon</th>
+          <th>Vakıf Telefon</th>         
           <th>Vakıf Fax</th>
+          <th>Vakıf EMail</th>
         </tr>
       </thead>
       <tbody>
