@@ -10,19 +10,19 @@ const VakifForm = (props) => {
                 <Row>
                     <Col lg="3" md="6">
                         <FormGroup>
-                            <Label>Vakıf İli</Label><Input type="text" name="CityName" placeholder="İl.." />
+                            <Label>Vakıf İli</Label><Input type="text" name="ProvinceName" placeholder="İl.." />
                         </FormGroup>
                     </Col>
                     <Col lg="3" md="6">
                         <FormGroup>
-                            <Label>Sayfa Boyut</Label>  <Input type="text" name="PageSize" placeholder="Sayfa Sayısı" />
+                            <Label>Vakıf İlçesi</Label>  <Input type="text" name="CountyName" placeholder="İlçe" />
                         </FormGroup>
                     </Col>
                     <Col lg="3" md="6">
                         <FormGroup>
-                            <Label>Sayfa No</Label>  <Input type="text" name="FoundationName" placeholder="Sayfa No" />
+                            <Label>Sayfa Boyut</Label>  <Input type="text" name="PageSize" placeholder="Sayfa Kayıt Sayısı" />
                         </FormGroup>
-                    </Col>
+                    </Col>            
 
                 </Row>
                 <Row>
