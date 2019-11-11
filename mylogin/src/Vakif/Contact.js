@@ -15,7 +15,7 @@ class Contact extends Component {
       cityName: '',
       foundationName: '',
       isLoading: false,
-      errorStatus:false
+      errorStatus:''
     }
     this.getVakifListFromServer = this.getVakifListFromServer.bind(this);
   }
@@ -60,7 +60,7 @@ class Contact extends Component {
             isLoading: false,
             cityName: cityNameGlob,
             foundationName: foundationNameGlob,
-            errorStatus:false
+            errorStatus:response.status
           }, () => {
                 //set state call back..
           }))
@@ -70,6 +70,9 @@ class Contact extends Component {
         }));
       console.log(this.state.vakifList);
       console.log(this.state.vakifList);
+
+     
+
     }
   }
 
@@ -79,9 +82,9 @@ class Contact extends Component {
   };
 
   render() {
-    const { vakifList } = this.state;
+    const { vakifList,errorStatus } = this.state;
     console.log(vakifList);
-
+    alert(this.state.errorStatus);
     if (this.state.isLoading === true) {
       return (
         <h1>Loading..!</h1>
@@ -89,7 +92,7 @@ class Contact extends Component {
     }
     else {
 
-      if (error) {
+      if (errorStatus!='' && errorStatus != null && errorStatus!=200) {
         return (
           <h1>No Data Found..!</h1>
         );
