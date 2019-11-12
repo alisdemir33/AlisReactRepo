@@ -24,10 +24,10 @@ let list2='';
         starCount={5}
         value={(key+1)%5 === 0 ? 5 : (key+1)%5 }
       //onStarClick={this.onStarClick.bind(this)}
-      /></td>
-      <td>{item.FName}</td>
+      /></td>      
       <td>{item.ProvinceName}</td>
       <td>{item.CountyName}</td>
+      <td>{item.FName}</td>
       <td>{item.Address}</td>
       <td>{item.Phone}</td>
       <td>{item.Fax}</td>
@@ -42,10 +42,10 @@ let list2='';
       <thead>
         <tr>
           <th>#</th>
-          <th>Reyting</th>
-          <th>Vakıf Adi</th>
+          <th>Reyting</th>         
           <th>Vakıf İli</th>
           <th>Vakıf İlçesi</th>
+          <th>Vakıf Adi</th>
           <th>Vakıf Adresi</th>
           <th>Vakıf Telefon</th>         
           <th>Vakıf Fax</th>

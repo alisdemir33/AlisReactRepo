@@ -28,7 +28,7 @@ class Contact extends Component {
 
   handlePageClick = data => {
     debugger;
-    this.pageNumber = data.selected;
+    this.pageNumber = data.selected+1;
     this.setState({
       selectedPage: this.pageNumber
     })
@@ -47,8 +47,10 @@ class Contact extends Component {
       ProvinceNameGlob = this.state.ProvinceName;
       CountyNameGlob = this.state.CountyName;
 
-      if (e.target != null) {
+      if (e.target != null) {//formdan button click ile gelindiğinde
         e.preventDefault();
+
+        this.pageNumber=1;
 
         if (e.target.elements.PageSize.value != '')
           pageSize = e.target.elements.PageSize.value;
@@ -69,6 +71,7 @@ class Contact extends Component {
           this.setState({
             vakifList: { PagedListMetaData: response.data.PagedListMetaData, InnerList: response.data.InnerList },
             isLoading: false,
+            selectedPage: this.pageNumber,
             ProvinceName: ProvinceNameGlob,
             CountyName: CountyNameGlob,
             errorStatus: false
@@ -81,9 +84,7 @@ class Contact extends Component {
           vakifList: null
         }));
       console.log(this.state.vakifList);
-      console.log(this.state.vakifList);
-
-     
+      console.log(this.state.vakifList);     
 
     }
   }
@@ -151,7 +152,7 @@ class Contact extends Component {
               pageCount={this.state.vakifList == null ? 0 : this.state.vakifList.PagedListMetaData.PageCount}
               marginPagesDisplayed={3}              
               pageRangeDisplayed={3}
-              forcePage={this.state.selectedPage}
+              forcePage={this.state.selectedPage-1}
               onPageChange={this.handlePageClick}
               breakClassName={'page-item'}
               breakLinkClassName={'page-link'}
