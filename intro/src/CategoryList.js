@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
+import { createSecureContext } from "tls";
 
 export default class CategoryList extends Component {
  
@@ -7,8 +8,9 @@ export default class CategoryList extends Component {
       categories: [
         { categoryId: 1, categoryName: "Beverages" },
         { categoryId: 2, categoryName: "Condiments" },
-        { categoryId: 3, categoryName: "Steaks" }
-      ]
+        { categoryId: 3, categoryName: "Steaks" }     
+     ],
+     currentCategory:""
     };
   
 
@@ -22,10 +24,11 @@ export default class CategoryList extends Component {
          {
              this.state.categories.map(category =>( 
              <ListGroupItem key={category.categoryId} >{category.categoryName}</ListGroupItem>
-             ))}
-         }
+             ))
+        }
+         
         </ListGroup>
       </div>
     );
-  }
-}
+  }}
+
