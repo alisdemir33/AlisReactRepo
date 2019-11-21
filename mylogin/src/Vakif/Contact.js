@@ -1,12 +1,10 @@
 
 import React, { Component } from 'react';
-import { isTSMethodSignature } from '@babel/types';
 import VakifList from './VakifInfo';
 import VakifForm from './VakifSorguForm';
 import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 import { Button, Container } from 'reactstrap';
-import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Contact extends Component {
