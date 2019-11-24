@@ -7,10 +7,22 @@ import CategoryList from "./CategoryList";
 export default class App extends Component {
   state = {
     currentCategory: { id: 0, categoryName: "No Selection" },
-    products: []
+    products: [],
+    cart:[]
   };
   componentDidMount = () => {
     this.getProducts();
+  }
+
+  addToCart = (product) =>{
+    let newCart= this.state.cart;
+    var addedItem=newCart.find( cart => cart.product.id === product.id);
+    if(addedItem){
+      addedItem.quantity+=1;
+    }else{
+      newCart.push({product:product,quantity:1});  
+    }    
+    this.setState({cart:newCart});
   }
 
 
@@ -40,9 +52,9 @@ export default class App extends Component {
     return (
       <div>
         <Container>
-          <Row>
-            <Navi></Navi>
-          </Row>
+         
+            <Navi cart={this.state.cart}></Navi>
+         
           <Row>
             <Col xs="3">
               <CategoryList
@@ -54,6 +66,7 @@ export default class App extends Component {
             <Col xs="9">
               <ProductList
                 products={this.state.products}
+                addToCart={this.addToCart}
                 currentCategory={this.state.currentCategory}
                 info={productInfo}
               />
