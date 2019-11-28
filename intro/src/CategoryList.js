@@ -3,32 +3,38 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 import { createSecureContext } from "tls";
 
 export default class CategoryList extends Component {
- 
-    state = {
-      categories: [
-        { categoryId: 1, categoryName: "Beverages" },
-        { categoryId: 2, categoryName: "Condiments" },
-        { categoryId: 3, categoryName: "Steaks" }     
-     ],
-     currentCategory:""
-    };
-  
+  state = {
+    categories: [],   
+    currentCategory: { id: 0, categoryName: "Not Selected" }
+  };
+
+  componentDidMount (){
+    this.getCategories();
+  }
+
+  getCategories = () => {
+    fetch("http://localhost:3000/categories")
+      .then(response => response.json())
+      .then(data => this.setState({ categories: data }))
+      .catch(error => console.log(error));
+  };
 
   render() {
     return (
       <div>
         <h3>{this.props.info.title}</h3>
-        <h3>{this.state.counter}</h3>
-        <ListGroup>
-          <ListGroupItem>ali</ListGroupItem>
-         {
-             this.state.categories.map(category =>( 
-             <ListGroupItem key={category.categoryId} >{category.categoryName}</ListGroupItem>
-             ))
-        }
-         
+        <ListGroup>        
+          {this.state.categories.map(category => (
+            <ListGroupItem active ={ category.id === this.props.currentCategory.id ? true: false }
+              onClick={() => this.props.changeCategory(category)}
+              key={category.id}
+            >
+              {category.categoryName}
+            </ListGroupItem>
+          ))}
         </ListGroup>
+        {/* <h3>{this.props.currentCategory.categoryName}</h3> */}
       </div>
     );
-  }}
-
+  }
+}
