@@ -13,7 +13,7 @@ export default class App extends Component {
   };
   componentDidMount = () => {
     this.getProducts();
-    alertfy.success('Accepted');
+    //alertfy.success('Accepted');
     
   }
 
@@ -33,6 +33,7 @@ export default class App extends Component {
     let newCart = this.state.cart.filter( item => item.product.id !== product.id);
     console.log(newCart);
     this.setState({cart:newCart});
+    alertfy.error(product.productName +' Removed!')
   }
 
 
