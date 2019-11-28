@@ -28,7 +28,7 @@ const Navi = (props) => {
             <NavItem>
               <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
             </NavItem>
-            <CardSummary  cart={props.cart}/>
+            <CardSummary removeFromCart={ props.removeFromCart} cart={props.cart}/>
           </Nav>
         {/*   <NavbarText>Simple Text</NavbarText> */}
         </Collapse>
