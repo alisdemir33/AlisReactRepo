@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import Navi from "./Navi";
 import ProductList from "./ProductList";
 import CategoryList from "./CategoryList";
-import alertfy from 'alertfyjs';
+const alertfy = require("alertifyjs");
 
 export default class App extends Component {
   state = {
@@ -13,6 +13,8 @@ export default class App extends Component {
   };
   componentDidMount = () => {
     this.getProducts();
+    alertfy.success('Accepted');
+    
   }
 
   addToCart = (product) =>{
