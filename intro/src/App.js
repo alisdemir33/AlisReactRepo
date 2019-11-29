@@ -40,6 +40,22 @@ export default class App extends Component {
     alertfy.error(product.productName + " Removed!");
   };
 
+  removeOneFromCart = product => {
+    let newCart = this.state.cart;
+    var selectedItem = newCart.find(cart => cart.product.id === product.id);
+   
+    newCart = this.state.cart.filter(
+      item => item.product.id !== product.id);
+
+    if(selectedItem.quantity!==1){  
+      selectedItem.quantity-=1;
+      newCart.push(selectedItem);     
+    }   
+
+    this.setState({ cart: newCart });
+    alertfy.error(product.productName + "(One) Item Removed!");
+  };
+
   changeCategory = category => {
     console.log(category);
     this.setState({ currentCategory: category });
@@ -94,8 +110,20 @@ export default class App extends Component {
                     />
                   )}
                 />
-                <Route exact path="/cart" component={CartList} />
-                <Route exact path="/" component={NotFound} />>
+                <Route
+                  exact
+                  path="/cart"
+                  render={props => (
+                    <CartList
+                      {...props}
+                      cart={this.state.cart}
+                      removeFromCart={this.removeFromCart}
+                      removeOneFromCart={this.removeOneFromCart}
+                      addToCart={this.addToCart}
+                    />
+                  )}
+                />
+                <Route component={NotFound} />>
               </Switch>
             </Col>
           </Row>
