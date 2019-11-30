@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Button, FormGroup, Form, Label, Input } from "reactstrap";
-const alertfy = require("alertifyjs");
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import alertify from "alertifyjs";
 
 export default class FormDemo2 extends Component {
-  state = { city: "", email: "", description: "", password: "" };
-
+  state = { email: "", password: "", city: "", description: "" };
   handleChange = event => {
     let name = event.target.name;
     let value = event.target.value;
@@ -13,21 +12,22 @@ export default class FormDemo2 extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    alertfy.success(this.state.email + " Added!");
+    alertify.success(this.state.email + " added to db!");
+    alertify.success(this.state.password + " added to db!");
+    alertify.success(this.state.city + " added to db!");
+    alertify.success(this.state.description + " added to db!");
   };
-
   render() {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
-            <Label for="email"> Email</Label>
+            <Label for="email">Email</Label>
             <Input
               type="email"
               name="email"
               id="email"
-              placeholder="Enter Email"
+              placeholder="Enter email"
               onChange={this.handleChange}
             />
           </FormGroup>
@@ -60,15 +60,14 @@ export default class FormDemo2 extends Component {
               id="city"
               onChange={this.handleChange}
             >
-              <option value="6">Ankara</option>
-              <option value="34">İstanbul</option>
-              <option value="35">İzmir</option>
-              <option value="01" >Adana</option>             
+              <option>Ankara</option>
+              <option>İstanbul</option>
+              <option>İzmir</option>
+              <option>Adana</option>
+              <option>Diyarbakır</option>
             </Input>
           </FormGroup>
-          <FormGroup>
-          <Button type="submit">Save</Button>  
-          </FormGroup>
+          <Button type="submit">Save</Button>
         </Form>
       </div>
     );

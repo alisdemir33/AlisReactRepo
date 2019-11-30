@@ -1,34 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export default class FormDemo1 extends Component {
-    state =  {userName:'', city:''}
-    onChangeHandler =(event)=>{
-        //this.setState({userName:event.target.value})
-        let name = event.target.name;
-        let value = event.target.value;
+  state = { userName: '', cityName:'' };
 
-        this.setState({[name]:value})
-    }
+  onChangeHandler = e => {
+  // this.setState({userName: e.target.value});
 
-    onSubmitHandler = (event)=>{
-        event.preventDefault();
-        alert(this.state.userName);
-    }
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.onSubmitHandler}>
-                    <h3>User Name</h3>
-                    <input name="userName" onChange={this.onChangeHandler} type="text"></input>
-                    <h3>User Name is {this.state.userName}</h3>
+let name= e.target.name;
+let value=e.target.value;
+this.setState({[name]:value});
 
-                    <h3>City</h3>
-                    <input name="city" onChange={this.onChangeHandler} type="text"></input>
-                    <h3>City is {this.state.city}</h3>
+  };
+  render() {
+ 
+    return (
+      <div>
+        <form>
+          <h3>User Name</h3>
+          <input
+            type="text"
+            name="userName"
+            onChange={this.onChangeHandler}
+          ></input>
+          <h3>userName is:{this.state.userName}</h3>
 
-                    <input type="submit" value="Save"></input>
-                </form>
-            </div>
-        )
-    }
+          <h3>City Name</h3>
+          <input
+            type="text"
+            name="cityName"
+            onChange={this.onChangeHandler}
+          ></input>
+          <h3>City is:{this.state.cityName}</h3>    
+            
+
+        </form>
+      </div>
+    );
+  }
 }
