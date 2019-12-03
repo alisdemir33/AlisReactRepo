@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import {Row,Col} from "reactstrap"
 
-export default class Dashboard extends Component {
+export default class NotFound extends Component {
     render() {
         return (
             <div>
-                
+                <h2>Sayfa bulunamadı</h2>
             </div>
         )
     }
