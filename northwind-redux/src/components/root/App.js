@@ -10,7 +10,15 @@ import NotFound from "../common/NotFound";
 function App() {
   return (
    <div>
-     
+     <Container>
+       <Navi>
+         
+
+       </Navi>
+       <Dashboard>
+
+        </Dashboard>
+       </Container>
    </div>
   );
 }
