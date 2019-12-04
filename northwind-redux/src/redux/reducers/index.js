@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import changeCategoryReducer from 'categoryReducer';
+import changeCategoryReducer from './changeCategoryReducer';
 
 const rootReducer= combineReducers({
    changeCategoryReducer
