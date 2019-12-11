@@ -38,7 +38,7 @@ export default class Navi extends React.Component {
                   <Link to="/saveproduct">Ürün ekle</Link>
                 </NavLink>
               </NavItem>
-            
+              <CartSummary/>           
             </Nav>
           </Collapse>
         </Navbar>
