@@ -24,9 +24,9 @@ import {
          
          { this.props.cart.map(cartItem => ()
 
-         );
+         
         <DropdownItem>items</DropdownItem>
-         }
+         )}
 
           <DropdownItem divider />
           <DropdownItem><Link to={"/cart"}>Sepete git</Link></DropdownItem>
