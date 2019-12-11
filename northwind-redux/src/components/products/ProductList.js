@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table,Badge,Button } from "reactstrap";
 import { bindActionCreators } from "redux";
-import { getProducts } from "../../redux/actions/productActions";
-import {Link} from "react-router-dom"
+import * as productActions from "../../redux/actions/productActions";
+import * as  cartActions  from "../../redux/actions/cartActions";
+import {Link} from "react-router-dom";
+const alertfy = require("alertifyjs");
 
 class ProductList extends Component {
-  componentDidMount() {
-    alert(this.props.currentCategory.categoryId);
-    this.props.actions.getProducts(this.props.currentCategory.categoryId);
+  componentDidMount() {   
+    this.props.actions.getProducts(this.props.currentCategory.categoryId);   
+  }
+
+  addToCart = (product) =>{
+    this.props.actions.addToCart(product);
+      alertfy.success(product.productName+'Added!');
   }
 
   render() {
@@ -29,6 +35,7 @@ class ProductList extends Component {
                 <th>Unit Price</th>
                 <th>Quantity Per Unit</th>
                 <th>Units In Stock</th>
+                <th>Add</th>
                 <th />
               </tr>
             </thead>
@@ -72,7 +79,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      getProducts: bindActionCreators(getProducts, dispatch)
+      getProducts: bindActionCreators( productActions.getProducts, dispatch),
+      addToCart: bindActionCreators(cartActions.addToCart, dispatch)
     }
   };
 }

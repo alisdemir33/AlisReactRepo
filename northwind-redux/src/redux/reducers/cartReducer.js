@@ -4,8 +4,9 @@ import initialState from "./initialState";
 export default function cartReducer(state = initialState.cart, action) {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
+      debugger;
       var addedItem = state.find(
-        c => c.productId === action.payload.product.id
+        c => c.product.id === action.payload.product.id
       );
 
       if (addedItem) {
@@ -16,10 +17,8 @@ export default function cartReducer(state = initialState.cart, action) {
             return Object.assign({}, addedItem, {
               quantity: addedItem.quantity + 1
             });
-             
-          //  return {...addedItem, quantity:addedItem.quantity+1}}
 
-
+            //  return {...addedItem, quantity:addedItem.quantity+1}}
           } else {
             return cartItem;
           }
@@ -27,7 +26,7 @@ export default function cartReducer(state = initialState.cart, action) {
         return newState;
       } else {
         //ilk defa sepete ekleniyor ise
-        return [...state,{...action.payload}];
+        return [...state, { ...action.payload }];
       }
 
     default:
