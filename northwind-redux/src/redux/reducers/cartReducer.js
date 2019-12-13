@@ -28,6 +28,9 @@ export default function cartReducer(state = initialState.cart, action) {
         return [...state, { ...action.payload }];
       }
 
+      case actionTypes.REMOVE_FROM_CART:
+        
+
     default:
       return state;
   }
