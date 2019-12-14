@@ -28,17 +28,32 @@ export default class Navi extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+         <Navbar color="light" light expand="md">
           <NavbarBrand><Link to="/">Northwind Mağazası</Link></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink>
+                  <Link to="/">AnaSayfa</Link>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>
+                  <Link to="/products">AnaSayfa</Link>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>
+                  <Link to="/cart">sepet</Link>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>
                   <Link to="/saveproduct">Ürün ekle</Link>
                 </NavLink>
               </NavItem>
-              <CartSummary/>           
+              <CartSummary />
             </Nav>
           </Collapse>
         </Navbar>

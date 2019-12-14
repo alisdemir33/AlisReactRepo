@@ -9,17 +9,19 @@ import NotFound from "../common/NotFound";
 
 function App() {
   return (
-   <div>
-     <Container>
-       <Navi>
-         
-
-       </Navi>
-       <Dashboard>
-
-        </Dashboard>
-       </Container>
-   </div>
+    <div>
+      <Container>
+ <Navi></Navi>
+      <Switch>
+             
+                <Route exact path="/" component={Dashboard}/>
+                <Route path="/products" component={Dashboard}/>
+                <Route path="/cart" component={CartDetail}/>
+                <Route component={NotFound} />
+              </Switch>      
+       
+      </Container>
+    </div>
   );
 }
 

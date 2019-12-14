@@ -29,7 +29,26 @@ export default function cartReducer(state = initialState.cart, action) {
       }
 
       case actionTypes.REMOVE_FROM_CART:
-        
+        const newState2=state.filter( cartItem => action.payload.id !== cartItem.product.id);
+        return newState2;
+
+      case actionTypes.REMOVE_ONE_FROM_CART:
+
+        //  const newStateForRemoveOne=state.filter( cartItem => action.payload.id !== cartItem.product.id);
+          
+          let newCart = state;
+          var selectedItem = newCart.find(cart => cart.product.id === action.payload.id);
+         
+          newCart = state.cart.filter(
+            item => item.product.id !== action.payload.id);
+      
+          if(selectedItem.quantity!==1){  
+            selectedItem.quantity-=1;
+            return [...state, { ...action.payload }];    
+          }     
+
+          return newCart;          
+      
 
     default:
       return state;

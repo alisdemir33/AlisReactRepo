@@ -8,19 +8,27 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Badge,
   NavItem,
-  NavLink,
-  Badge
+  NavLink
 } from "reactstrap";
+const alertfy = require("alertifyjs");
 
 class CartSummary extends Component {
-  
-  removeFromCart = (product) =>{
+  removeFromCart = product => {
     this.props.actions.removeFromCart(product);
-    alertify.error(product.productName + " sepetten silindi")
-  }
-  
-  render() {
+    alertfy.error(product.productName + " sepetten silindi");
+  };
+
+  emptyCart = () => {
+    return (
+      <NavItem>
+        <NavLink>Sepet Boş</NavLink>
+      </NavItem>
+    );
+  };
+
+  renderSummary = () =>  {
     return (
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
@@ -29,10 +37,15 @@ class CartSummary extends Component {
         <DropdownMenu right>
           {this.props.cart.map(cartItem => (
             <DropdownItem key={cartItem.product.id}>
-              <Badge color="danger" onClick={()=> this.removeFromCart(cartItem.product)} >-</Badge>
+              <Badge
+                color="danger"
+                onClick={() => this.removeFromCart(cartItem.product)}
+              >
+                -
+              </Badge>
               {cartItem.product.productName}
-          <Badge color="success" >{cartItem.quantity}</Badge>
-              </DropdownItem>
+              <Badge color="success">{cartItem.quantity}</Badge>
+            </DropdownItem>
           ))}
 
           <DropdownItem divider />
@@ -42,8 +55,14 @@ class CartSummary extends Component {
         </DropdownMenu>
       </UncontrolledDropdown>
     );
+          }
+  
+
+  render() {
+    return (<div>{ this.props.cart.length > 0 ? this.renderSummary() : this.emptyCart()}</div>);      
   }
 }
+
 
 function mapStateToProps(state) {
   return {
