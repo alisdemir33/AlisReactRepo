@@ -5,7 +5,8 @@ export default function cartReducer(state = initialState.cart, action) {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
       debugger;
-      var addedItem = state.find(c => c.product.id === action.payload.product.id
+      var addedItem = state.find(
+        c => c.product.id === action.payload.product.id
       );
 
       if (addedItem) {
@@ -28,27 +29,32 @@ export default function cartReducer(state = initialState.cart, action) {
         return [...state, { ...action.payload }];
       }
 
-      case actionTypes.REMOVE_FROM_CART:
-        const newState2=state.filter( cartItem => action.payload.id !== cartItem.product.id);
-        return newState2;
+    case actionTypes.REMOVE_FROM_CART:
+      const newState2 = state.filter(
+        cartItem => action.payload.id !== cartItem.product.id
+      );
+      return newState2;
 
-      case actionTypes.REMOVE_ONE_FROM_CART:
-
-        //  const newStateForRemoveOne=state.filter( cartItem => action.payload.id !== cartItem.product.id);
-          
-          let newCart = state;
-          var selectedItem = newCart.find(cart => cart.product.id === action.payload.id);
-         
-          newCart = state.cart.filter(
-            item => item.product.id !== action.payload.id);
+    case actionTypes.REMOVE_ONE_FROM_CART:
+        debugger;
+      var itemToRemove = state.find(
+        cartItem => cartItem.product.id === action.payload.id
+      );     
       
-          if(selectedItem.quantity!==1){  
-            selectedItem.quantity-=1;
-            return [...state, { ...action.payload }];    
-          }     
+      let newCart = state.filter(item => item.product.id !== itemToRemove.product.id);
 
-          return newCart;          
-      
+      if (itemToRemove.quantity !== 1) {
+        itemToRemove.quantity -= 1;
+        return [...state, { ...itemToRemove }].sort(function(a, b){
+          var x = a.product.productName.toLowerCase();
+          var y = b.product.productName.toLowerCase();
+          if (x < y) {return -1;}
+          if (x > y) {return 1;}
+          return 0;
+        });
+      }else{      
+        return newCart;
+      }    
 
     default:
       return state;
