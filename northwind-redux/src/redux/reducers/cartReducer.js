@@ -14,11 +14,8 @@ export default function cartReducer(state = initialState.cart, action) {
         var newState = state.map(cartItem => {
           if (cartItem.product.id === action.payload.product.id) {
             //sepette var ise cartItemın kopyasını alıp bir artırıp KOPYASInı sepete atıyoruz.
-            return Object.assign({}, addedItem, {
-              quantity: addedItem.quantity + 1
-            });
-
-            //  return {...addedItem, quantity:addedItem.quantity+1}}
+            //return Object.assign({}, addedItem, {quantity: addedItem.quantity + 1 });
+              return {...addedItem, quantity:addedItem.quantity+1};
           } else {
             return cartItem;
           }
@@ -26,7 +23,7 @@ export default function cartReducer(state = initialState.cart, action) {
         return newState;
       } else {
         //ilk defa sepete ekleniyor ise
-        return [...state, { ...action.payload }];
+        return [...state,  {...action.payload}];
       }
 
     case actionTypes.REMOVE_FROM_CART:
@@ -36,7 +33,7 @@ export default function cartReducer(state = initialState.cart, action) {
       return newState2;
 
     case actionTypes.REMOVE_ONE_FROM_CART:
-        debugger;
+       // debugger;
       var itemToRemove = state.find(
         cartItem => cartItem.product.id === action.payload.id
       );     
@@ -44,8 +41,9 @@ export default function cartReducer(state = initialState.cart, action) {
       let newCart = state.filter(item => item.product.id !== itemToRemove.product.id);
 
       if (itemToRemove.quantity !== 1) {
-        itemToRemove.quantity -= 1;
-        return [...state, { ...itemToRemove }].sort(function(a, b){
+       let newItem={...itemToRemove, quantity : itemToRemove.quantity -= 1 }
+        // itemToRemove.quantity -= 1;
+        return [...newCart, newItem].sort(function(a, b){
           var x = a.product.productName.toLowerCase();
           var y = b.product.productName.toLowerCase();
           if (x < y) {return -1;}
