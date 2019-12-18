@@ -37,12 +37,7 @@ export default class Navi extends React.Component {
                 <NavLink>
                   <Link to="/">AnaSayfa</Link>
                 </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link to="/products">AnaSayfa</Link>
-                </NavLink>
-              </NavItem>
+              </NavItem>             
               <NavItem>
                 <NavLink>
                   <Link to="/cart">sepet</Link>

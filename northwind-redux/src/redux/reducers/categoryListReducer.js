@@ -1,7 +1,7 @@
 import * as actiontypes from "../actions/actionTypes";
 import initialState from "./initialState";
 
-export default function changeCategoryListReducer(
+export default function changeCategoryReducer(
   state = initialState.categories,
   action
 ) {

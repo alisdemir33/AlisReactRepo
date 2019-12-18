@@ -45,7 +45,7 @@ class CategoryList extends Component {
 function mapStateToProps(state) {
   return {
     currentCategory: state.changeCategoryReducer,
-    categories: state.changeCategoryListReducer
+    categories: state.categoryListReducer
   };
 }
 

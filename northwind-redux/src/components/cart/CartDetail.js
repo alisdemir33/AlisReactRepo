@@ -17,7 +17,7 @@ class CartDetail extends Component {
             <th>Product Name</th>          
             <th>Unit Price</th>
             <th>Quantity</th>
-            <th>X</th>
+            <th>x</th>
             <th>-</th>
             <th>+</th>
           </tr>

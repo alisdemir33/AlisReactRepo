@@ -1,8 +1,8 @@
 
-
 export default {
-  currentCategory: {  },
-  categories: [],
+  currentCategory:{},
+  categories:[],
   products:[],
-  cart:[]
-};
+  cart:[],
+  savedProduct:{}
+}
