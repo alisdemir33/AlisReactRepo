@@ -16,10 +16,12 @@ function AddOrUpdateProduct({
 }) {
   const [product, setProduct] = useState({ ...props.product });
   const [errors, setErrors] = useState({});
+  
   useEffect(() => {
     if (categories.length === 0) {
       getCategories();
     }
+    
     setProduct({ ...props.product });
   }, [props.product]);
 
@@ -66,16 +68,18 @@ function AddOrUpdateProduct({
 }
 
 export function getProductById(products, productId) {
-  let product = products.find(product => product.id === productId) || null;
+  let product = products.find(product => product.id == productId) || null;
   return product;
 }
 
 function mapStateToProps(state, ownProps) {
   const productId = ownProps.match.params.productId;
+  
   const product =
     productId && state.productListReducer.length > 0
       ? getProductById(state.productListReducer, productId)
       : {};
+     console.log('-------'+product)
   return {
     product,
     products: state.productListReducer,

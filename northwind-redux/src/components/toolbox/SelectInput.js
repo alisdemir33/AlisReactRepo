@@ -11,7 +11,7 @@ const SelectInput = ({
 }) => {
   return (
     <div className="form-group">
-      <label htmlFom={name}>{label}</label>
+      <label htmlFor={name}>{label}</label>
       <select name={name} value={value} onChange={onChange} className="form-control">
             <option value="">
                 {defaultOption}
