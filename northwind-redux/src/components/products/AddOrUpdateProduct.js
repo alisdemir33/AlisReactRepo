@@ -15,13 +15,13 @@ function AddOrUpdateProduct({
   ...props
 }) {
   const [product, setProduct] = useState({ ...props.product });
-  const [errors, setErrors] = useState({});
-  
+  const [errors, setErrors] = useState({productName:"",categoryId:"",unitsInStock:"",unitPrice:""});
+
   useEffect(() => {
     if (categories.length === 0) {
       getCategories();
     }
-    
+
     setProduct({ ...props.product });
   }, [props.product]);
 
@@ -32,29 +32,44 @@ function AddOrUpdateProduct({
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
 
-    validate(name,value);
+    validateOnChange(name, value);
   }
 
-  function validate(name,value) {
-    if (name === "productName" && value === "") {
+  function validateOnChange(name,value){
+    var regexNumber= /^\d*$/;
+    var result=false;
+   console.log(name)
+    if(name==="unitsInStock" || name==="quantityPerUnit" || name ==="unitPrice")  {
+     result= regexNumber.test(value);
+    alert(result)
+}
+  }
+
+  function validateOnSave(name, value) {
+    if (value === "") {
       setErrors(previousErrors => ({
         ...previousErrors,
-        productName: "Ürün ismi olmalıdır"
+        [name]: name+ " boş olamaz!"
+      }   
+      ));
+    } else {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        [name]: ""
       }));
-    }else{
-        setErrors(previousErrors => ({
-            ...previousErrors,
-            productName: ""
-          }));
     }
   }
 
   function handleSave(event) {
     event.preventDefault();
+    if(validateOnSave()){
     saveProduct(product).then(() => {
       history.push("/");
     });
+  }else{
+     console.log(errors);
   }
+}
 
   return (
     <ProductDetail
@@ -74,12 +89,12 @@ export function getProductById(products, productId) {
 
 function mapStateToProps(state, ownProps) {
   const productId = ownProps.match.params.productId;
-  
+
   const product =
     productId && state.productListReducer.length > 0
       ? getProductById(state.productListReducer, productId)
       : {};
-     console.log('-------'+product)
+  console.log("-------" + product);
   return {
     product,
     products: state.productListReducer,
@@ -92,7 +107,4 @@ const mapDispatchToProps = {
   saveProduct
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddOrUpdateProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(AddOrUpdateProduct);
