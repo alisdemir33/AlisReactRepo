@@ -3,6 +3,7 @@ import TextInput from "../toolbox/TextInput";
 import SelectInput from "../toolbox/SelectInput";
 
 const ProductDetail = ({ categories, product, onSave, onChange,errors }) => {
+ console.log(errors.unitPrice+' on detail component!')
   return (
     <form onSubmit={onSave}>
       <h2>{product.id ? "Güncelle" : "Ekle"}</h2>
