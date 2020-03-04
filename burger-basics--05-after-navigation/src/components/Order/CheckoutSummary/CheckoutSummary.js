@@ -3,7 +3,7 @@ import Burger from '../../Burger/Burger';
 import Button from '../../UI/Button/Button';
 
 const checkoutSummary = (props) =>{
-return(){
+return(
 
     <div>
         <h1>Tastes Good!</h1>
@@ -14,7 +14,7 @@ return(){
             </Burger>
         </div>
     </div>
-}
+);
 
 }
 
