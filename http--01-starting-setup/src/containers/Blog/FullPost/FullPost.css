@@ -29,10 +29,10 @@
 }
 
 .Edit button.Delete {
-    color: red;
+    color: green;
 }
 
 .Edit button.Delete:hover,
 .Edit button.Delete:active {
-    color: darkred;
+    color: darkgreen;
 }
