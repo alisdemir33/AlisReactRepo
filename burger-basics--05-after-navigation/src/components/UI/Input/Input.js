@@ -8,7 +8,7 @@ const input = props => {
   if(props.invalid && props.shouldValidate){ 
     inputClasses.push(classes.Invalid);  
   }
-  console.log(inputClasses);
+  //console.log(inputClasses);
 
 
   switch (props.elementType) {
@@ -48,10 +48,18 @@ const input = props => {
       break;
   }
 
+  let validationError = null;
+ 
+if (props.invalid && props.touched) {
+validationError = <p className = {classes.ValidationError}>{props.customMsg + ' must be entered'}</p>;
+   // console.log('invalid:'+props)
+}
+
   return (
     <div className={classes.Input}>
       <label className={classes.Label} >{props.label}</label>
       {inputElement}
+      {validationError}
     </div>
   );
 };

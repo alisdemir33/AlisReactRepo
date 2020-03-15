@@ -18,7 +18,7 @@ class ContactData extends Component {
         value: "",
         touched: false,
         validation: {
-          required: true
+          required: true          
         },
         valid: false
       },
@@ -88,10 +88,12 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" }
           ]
         },
-        value: ""
+        value: 'fastest',
+        validation:{},
+        valid:true
       }
     },
-
+    formIsValid:false,
     price: 5,
     loading: false
   };
@@ -167,8 +169,17 @@ class ContactData extends Component {
       clonedFormElement.validation
     );
     orderFormCopy[inputIdentifier] = clonedFormElement;
-    console.log(clonedFormElement);
-    this.setState({ orderForm: orderFormCopy });
+   
+    let formIsValid=true;
+    for(let identifier in orderFormCopy){
+     if(! orderFormCopy[identifier].valid){
+      formIsValid=false;
+     }
+    }
+
+    console.log(formIsValid);
+
+    this.setState({ orderForm: orderFormCopy, formIsValid:formIsValid });
   };
 
   render() {
@@ -184,8 +195,10 @@ class ContactData extends Component {
         <Input
           key={item.id}
           invalid={!item.config.valid}
+          touched={item.config.touched}
           elementType={item.config.elementType}
           elementConfig={item.config.elementConfig}
+          customMsg={item.config.elementConfig.placeholder}
           value={item.config.value}
           shouldValidate={item.config.validation && item.config.touched}
           changed={event => this.inputChangedHandler(event, item.id)}
@@ -196,7 +209,7 @@ class ContactData extends Component {
     let form = (
       <form onSubmit={this.orderHandler}>
         {formWithElements}
-        <Button btnType="Success">ORDER</Button>
+        <Button btnType="Success" disabled ={!this.state.formIsValid}>ORDER</Button>
       </form>
     );
 
