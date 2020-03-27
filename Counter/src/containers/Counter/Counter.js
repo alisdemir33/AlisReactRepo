@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -22,20 +23,42 @@ class Counter extends Component {
             case 'sub':
                 this.setState( ( prevState ) => { return { counter: prevState.counter - value } } )
                 break;
+            default:
+                this.setState( ( prevState ) => { return { counter: prevState.counter } } )
+                    
         }
     }
 
     render () {
         return (
             <div>
-                <CounterOutput value={this.state.counter} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
-                <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
-                <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
-                <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
+                <CounterOutput value={this.props.ctr} />
+                <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
+                <CounterControl label="Decrement" clicked={this. props.onDecrementCounter}  />
+                <CounterControl label="Add 5" clicked={this. props.onAddFive}  />
+                <CounterControl label="Subtract 5" clicked={this. props.onSubtractFive}  />
             </div>
         );
     }
 }
 
-export default Counter;
+const mapDispatchToProps = (dispatch) =>{
+
+    return{
+        onIncrementCounter: () => { dispatch({type:'INCREMENT'})},
+        onDecrementCounter :() => {dispatch({type:'DECREMENT'})},
+        onAddFive :() => {dispatch({type:'ADDFIVE',payload:3})},
+        onSubtractFive :() => {dispatch({type:'SUBFIVE',payload:4})}
+    }
+
+}
+
+const mapStateToProps = state => {
+
+    return {
+        ctr: state.counter
+    };
+
+};
+//mapStateToProps yok ise null gönderiyoruz
+export default connect(mapStateToProps,mapDispatchToProps)(Counter);
