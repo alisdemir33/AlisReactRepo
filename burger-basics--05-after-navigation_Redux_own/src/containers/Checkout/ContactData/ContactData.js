@@ -4,10 +4,11 @@ import classes from "./ContactData.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
   state = {
-    ingredients: null,
+   // ingredients: null,
     orderForm: {
       name: {
         elementType: "input",
@@ -100,12 +101,12 @@ class ContactData extends Component {
 
   //let ingredients;
 
-  componentDidMount() {
+ /*  componentDidMount() {
     this.setState({
       ingredients: this.props.ingredients,
       price: this.props.totalPrice
     });
-  }
+  } */
 
   checkValidity(value, validation) {
     let isValid = true;
@@ -126,7 +127,7 @@ class ContactData extends Component {
 
   orderHandler = event => {
     event.preventDefault();
-    console.log(this.state.totalPrice);
+    console.log(this.props.totalPrice);
 
     this.setState({ loading: true });
 
@@ -139,8 +140,8 @@ class ContactData extends Component {
     }
 
     const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.price,
+      ingredients: this.props.ingredients,
+      price: this.props.totalPrice,
       orderData: formData
     };
 
@@ -224,4 +225,14 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+
+  return {
+    ingredients: state.personReducer.ingredients, //state.ResultReducer.results
+    totalPrice: state.personReducer.totalPrice
+  };
+
+};
+
+
+export default connect(mapStateToProps,null)(ContactData);
