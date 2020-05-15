@@ -1,4 +1,4 @@
-import * as actionTypes  from '../Actions'
+import * as actionTypes  from '../actions/Actions'
 
 const initialState = {  
   results: []//empty arry definition
