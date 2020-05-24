@@ -235,4 +235,10 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps,null)(ContactData);
+const mapDispatchToProps = () =>{
+
+
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(ContactData);

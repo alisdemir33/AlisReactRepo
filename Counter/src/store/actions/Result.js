@@ -8,8 +8,9 @@ export const saveValue = (valueToStore) => {
 }
 
 export const storeValue = (valueToStore) => {
-    return dispatch => {
+    return (dispatch,getState) => {
         setTimeout(() => {
+            console.log('State before dispatch:'+ getState().ctrReducer.counter)
             dispatch(saveValue(valueToStore));
         }, 2000);
 
