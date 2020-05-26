@@ -1,8 +1,8 @@
 import {combineReducers} from "redux"
-import reducer from './reducers/burgerBuilder'
+import burgerReducerRef from './burgerBuilderReducer'
 
 const rootReducer = combineReducers({
-   personReducer: reducer
+   burgerReducer: burgerReducerRef
 })
 
 export default rootReducer;

@@ -4,14 +4,14 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { BrowserRouter } from "react-router-dom";
-import { createStore ,compose} from 'redux';
+import { createStore ,applyMiddleware,compose} from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 
-import rootReducer from './store/rootreducer'
+import rootReducer from './store/reducers/rootreducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers());
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers( applyMiddleware(thunk)));
 
 //const store =createStore(rootReducer);
 

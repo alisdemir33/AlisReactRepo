@@ -1,5 +1,6 @@
 export {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    initIngredientsFromServer
   
-} from './burgerBuilder';
+} from './burgerBuilderActionCreator';
