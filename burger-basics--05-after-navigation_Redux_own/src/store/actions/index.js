@@ -1,6 +1,10 @@
 export {
     addIngredient,
     removeIngredient,
-    initIngredientsFromServer
-  
-} from './burgerBuilderActionCreator';
+    initIngredientsFromServer      
+} from './burgerBuilderActionCreator'
+
+export {
+    purchaseOrder
+}
+from './orderActionCreator'

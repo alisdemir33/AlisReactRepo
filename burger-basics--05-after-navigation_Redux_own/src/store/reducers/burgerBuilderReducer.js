@@ -74,7 +74,7 @@ const burgerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: action.payload,
-                totalPrice: totalPrice+sum
+                totalPrice: state.totalPrice+sum
             }
 
         case actionTypes.INIT_INGREDIENT_FAILED:
