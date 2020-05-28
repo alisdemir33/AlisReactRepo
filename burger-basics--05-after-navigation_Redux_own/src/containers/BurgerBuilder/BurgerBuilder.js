@@ -123,7 +123,7 @@ class BurgerBuilder extends Component {
       pathname: '/checkout',
       search: '?' + queryString
     }); */
-
+    this.props.onPurchaseInit();
     this.props.history.push('/checkout');
 
     
@@ -213,6 +213,10 @@ const mapDispatchToProps = (dispatch) => {
 
     onInitIngredient : () => {
       dispatch (burgerBuilderActions.initIngredientsFromServer());
+    },
+
+    onPurchaseInit: () => {
+      dispatch(burgerBuilderActions.pruchaseInit())
     }
   }
 }

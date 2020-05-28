@@ -49,3 +49,9 @@ export const purchaseOrder = (order) => {
         });     
     }
 }
+
+export const pruchaseInit = () =>{
+    return{
+        type:actionTypes.PURCHASE_INIT
+    }
+}
