@@ -164,7 +164,7 @@ class ContactData extends Component {
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
-    console.log(event.target.value);
+  //  console.log(event.target.value);
     const orderFormCopy = { ...this.state.orderForm };
     const clonedFormElement = { ...orderFormCopy[inputIdentifier] };
     clonedFormElement.value = event.target.value;
@@ -182,7 +182,7 @@ class ContactData extends Component {
       }
     }
 
-    console.log(formIsValid);
+    //console.log(formIsValid);
 
     this.setState({ orderForm: orderFormCopy, formIsValid: formIsValid });
   };

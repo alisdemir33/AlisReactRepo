@@ -60,21 +60,27 @@ const burgerReducer = (state = initialState, action) => {
             }
 
         case actionTypes.INIT_INGREDIENT:
-           // let price = INGREDIENT_PRICES['bacon'] + INGREDIENT_PRICES['meat'];
-           console.log('ing is'+  action.payload)
-                 const sum = Object.keys(action.payload)
+            //normally total price is fixed but if we have a default burder with some ingredient then initila total price sholud be computed..
+            //so we are calculating and due to in firebase all ingrdients are 0 then totalPrice is also 4, money for bread..
+           state.totalPrice=4;//cost of the bread...Ekmek
+           console.log(action.payload)
+                  let sumArr = Object.keys(action.payload)
                 .map(igKey => {
-                  return  INGREDIENT_PRICES[igKey];
+                  return  INGREDIENT_PRICES[igKey] * action.payload[igKey];
                 })
-                .reduce((sum, el) => {
-                  return sum + el;
+
+                console.log(sumArr)
+                
+                let sum = sumArr.reduce((sum, el) => {
+                    return   sum + el;
                 }, 0);  
 
            console.log('sum is'+  sum)
             return {
                 ...state,
                 ingredients: action.payload,
-                totalPrice: state.totalPrice+sum
+                totalPrice: state.totalPrice+sum,
+                error:false
             }
 
         case actionTypes.INIT_INGREDIENT_FAILED:

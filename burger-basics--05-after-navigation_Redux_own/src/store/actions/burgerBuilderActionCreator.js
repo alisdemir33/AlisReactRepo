@@ -40,7 +40,7 @@ export const initIngredientsFromServer = () => {
         axios
             .get("/ingredients.json")
             .then(response => {
-                console.log(response);
+                console.log(response.data);
                 //this.setState({ ingredients: response.data });
                 dispatch(initIngredients(response.data))
             })

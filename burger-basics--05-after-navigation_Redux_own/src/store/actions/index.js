@@ -6,6 +6,7 @@ export {
 
 export {
     purchaseOrder,
-    pruchaseInit
+    pruchaseInit,
+    fetchOrders
 }
 from './orderActionCreator'
