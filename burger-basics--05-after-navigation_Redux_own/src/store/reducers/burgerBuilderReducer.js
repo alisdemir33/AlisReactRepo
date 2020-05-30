@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
+import {updateObject} from '../util'
 
 const initialState = {
     ingredients: null,
@@ -15,12 +16,13 @@ const INGREDIENT_PRICES = {
 
 const burgerReducer = (state = initialState, action) => {
 
-    let oldCount ;//= state.ingredients[action.payload];
+    let oldCount ; //= state.ingredients[action.payload];
 
     switch (action.type) {
 
         case actionTypes.ADD_INGREDIENT:
-            oldCount = state.ingredients[action.payload];
+          // ---------------long way ------------------
+      /*   oldCount = state.ingredients[action.payload];
             let updatedCount1 = oldCount + 1;
             const updatedIngredients = {
                 ...state.ingredients
@@ -29,14 +31,27 @@ const burgerReducer = (state = initialState, action) => {
             const priceAddition = INGREDIENT_PRICES[action.payload];
             const oldPrice = state.totalPrice;
             const newPrice = oldPrice + priceAddition;
-
-            console.log('--' + updatedIngredients['salad'] + 'np' + newPrice)
-
             return {
                 ...state,
                 ingredients: updatedIngredients,
                 totalPrice: newPrice
-            }
+            } */
+            // ------------max way---------------
+        /*     return {
+                    ...state,
+                    ingredients :{
+                        ...state.ingredients,
+                        [action.payload]: state.ingredients[action.payload]+1
+                    },
+                    totalPrice: state.totalPrice+  INGREDIENT_PRICES[action.payload]
+            }*/
+ 
+            //----------with update object max way---------------
+            const updatedIngredient = { [action.payload]:state.ingredients[action.payload]+1}
+            const updatedIngredients = updateObject(state.ingredients, updatedIngredient );
+            const updatedTotalPrice = state.totalPrice+  INGREDIENT_PRICES[action.payload];
+            return updateObject(state, {ingredients:updatedIngredients,totalPrice : updatedTotalPrice});           
+         
 
         case actionTypes.REMOVE_INGREDIENT:
 
