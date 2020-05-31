@@ -13,7 +13,7 @@ export const addIngredient = (itemValue) => {
 export const removeIngredient = (itemValue) => {
 
     return {
-        type: actionTypes.ADD_INGREDIENT,
+        type: actionTypes.REMOVE_INGREDIENT,
         payload: itemValue
     }
 

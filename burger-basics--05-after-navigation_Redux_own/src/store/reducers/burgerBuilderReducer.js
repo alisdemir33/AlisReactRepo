@@ -55,7 +55,7 @@ const burgerReducer = (state = initialState, action) => {
 
         case actionTypes.REMOVE_INGREDIENT:
 
-            oldCount = state.ingredients[action.payload];
+          /*   oldCount = state.ingredients[action.payload];
             if (oldCount <= 0) {
                 return state;
             }
@@ -63,6 +63,7 @@ const burgerReducer = (state = initialState, action) => {
             const updatedIngredients1 = {
                 ...state.ingredients
             };
+
             updatedIngredients1[action.payload] = updatedCount;
             const priceDeduction = INGREDIENT_PRICES[action.payload];
             const oldPrice1 = state.totalPrice;
@@ -72,7 +73,20 @@ const burgerReducer = (state = initialState, action) => {
                 ...state,
                 ingredients: updatedIngredients1,
                 totalPrice: newPrice1
-            }
+            } */
+
+            oldCount = state.ingredients[action.payload];
+            if (oldCount <= 0) {
+                return state;
+            }          
+          
+            const updatedIngredient1 = { [action.payload]:state.ingredients[action.payload]-1}
+            const updatedIngredients1 = updateObject(state.ingredients, updatedIngredient1 );
+         
+            const newTotalPrice = state.totalPrice - INGREDIENT_PRICES[action.payload];
+            return updateObject(state,{ingredients:updatedIngredients1, totalPrice:newTotalPrice})
+          
+
 
         case actionTypes.INIT_INGREDIENT:
             //normally total price is fixed but if we have a default burder with some ingredient then initila total price sholud be computed..
@@ -91,21 +105,20 @@ const burgerReducer = (state = initialState, action) => {
                 }, 0);  
 
            console.log('sum is'+  sum)
-            return {
-                ...state,
-                ingredients: action.payload,
+           
+           return  updateObject(state,
+            { ingredients: action.payload, 
                 totalPrice: state.totalPrice+sum,
-                error:false
-            }
+                error:false});          
+          
 
         case actionTypes.INIT_INGREDIENT_FAILED:
 
-            return {
-                ...state,
-                ingredients: null,
+            return updateObject(state,
+               { ingredients: null,
                 totalPrice: 0,
-                error: true
-            }
+                error: true});
+            
 
         default:
             return state;
