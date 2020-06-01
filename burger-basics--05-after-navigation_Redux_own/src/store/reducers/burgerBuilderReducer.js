@@ -4,21 +4,20 @@ import { updateObject } from '../util'
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
-};
-
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.9
+    error: false,
+    INGREDIENT_PRICES : {
+        salad: 0.5,
+        cheese: 0.4,
+        meat: 1.3,
+        bacon: 0.9
+    }
 };
 
 const burgerReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT: return addIngredient(state, action);
         case actionTypes.REMOVE_INGREDIENT: return removeIngredient(state, action);
-        case actionTypes.INIT_INGREDIENT: return initIngredient(state, action);
+        case actionTypes.INIT_INGREDIENT: return initIngredients(state, action);
         case actionTypes.INIT_INGREDIENT_FAILED: return initIngredientFailed(state, action);
         default: return state;
     }
@@ -28,7 +27,7 @@ const addIngredient = (state, action) => {
     //----------with update object max way---------------
     const updatedIngredient = { [action.payload]: state.ingredients[action.payload] + 1 }
     const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
-    const updatedTotalPrice = state.totalPrice + INGREDIENT_PRICES[action.payload];
+    const updatedTotalPrice = state.totalPrice + state.INGREDIENT_PRICES[action.payload];
     return updateObject(state, { ingredients: updatedIngredients, totalPrice: updatedTotalPrice });
 
     // ---------------long way ------------------
@@ -67,7 +66,7 @@ const removeIngredient = (state, action) => {
     const updatedIngredient1 = { [action.payload]: state.ingredients[action.payload] - 1 }
     const updatedIngredients1 = updateObject(state.ingredients, updatedIngredient1);
 
-    const newTotalPrice = state.totalPrice - INGREDIENT_PRICES[action.payload];
+    const newTotalPrice = state.totalPrice - state.INGREDIENT_PRICES[action.payload];
     return updateObject(state, { ingredients: updatedIngredients1, totalPrice: newTotalPrice })
 
     /*   oldCount = state.ingredients[action.payload];
@@ -91,7 +90,7 @@ const removeIngredient = (state, action) => {
       } */
 }
 
-const initIngredient = (state, action) => {
+const initIngredients = (state, action) => {
     //normally total price is fixed but if we have a default burder with some ingredient then initila total price sholud be computed..
     //so we are calculating and due to in firebase all ingrdients are 0 then totalPrice is also 4, money for bread..
 
@@ -99,7 +98,7 @@ const initIngredient = (state, action) => {
     console.log(action.payload)
     let sumArr = Object.keys(action.payload)
         .map(igKey => {
-            return INGREDIENT_PRICES[igKey] * action.payload[igKey];
+            return state.INGREDIENT_PRICES[igKey] * action.payload[igKey];
         })
 
     console.log(sumArr)

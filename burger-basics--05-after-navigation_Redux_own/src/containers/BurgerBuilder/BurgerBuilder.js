@@ -152,10 +152,9 @@ class BurgerBuilder extends Component {
             ingredientAdded={this.props.onAddIngredient}
             ingredientRemoved={this.props.onRemoveIngredient}
             disabled={disabledInfo}
-             purchasable={this.updatePurchaseState()} 
-       
+             purchasable={this.updatePurchaseState()}        
             ordered={this.purchaseHandler}
-            price={this.props.totalPrice}
+            price={this.props.totalPrice}           
           />
         </Auxi>
       );
@@ -195,7 +194,7 @@ const mapStateToProps = state => {
   return {
     ingredients: state.burgerReducer.ingredients, //state.ResultReducer.results
     totalPrice: state.burgerReducer.totalPrice,
-    error:state.burgerReducer.error
+    error:state.burgerReducer.error   
   };
 
 };
