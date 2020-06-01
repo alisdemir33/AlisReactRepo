@@ -36,7 +36,7 @@ export const purchaseOrder = (order) => {
           }); */
         console.log(response.data);
         dispatch(purchaseBurgerSuccess(response.data.name, order));
-        alert("Order is accepted!");
+       // alert("Order is accepted!");
       })
       .catch((error) => {
         dispatch(purchaseBurgerFail(error));
