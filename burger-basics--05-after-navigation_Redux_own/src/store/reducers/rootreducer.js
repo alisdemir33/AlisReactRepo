@@ -1,10 +1,12 @@
 import {combineReducers} from "redux"
 import burgerReducerRef from './burgerBuilderReducer'
 import orderReducerRef from './orderReducer'
+import authReducerRef from './authReducer'
 
 const rootReducer = combineReducers({
    burgerReducer: burgerReducerRef,
-   orderReducer:orderReducerRef
+   orderReducer:orderReducerRef,
+   authReducer:authReducerRef
 
 })
 

@@ -10,3 +10,8 @@ export {
     fetchOrders
 }
 from './orderActionCreator'
+
+export {
+    authAttempt
+}
+from './authActionCreator'
