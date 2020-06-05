@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Auth.css";
 import * as authActions from '../../store/actions/index'
 import { connect } from 'react-redux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import axios from "../../../axios-orders";
+import axios from "axios";
 
 class Auth extends Component {
 
@@ -44,7 +45,8 @@ class Auth extends Component {
       }
     },
     formIsValid: false,
-    loading: false
+    loading: false,
+    isSignUp: false
   }
 
   checkValidity(value, rules) {
@@ -80,10 +82,11 @@ class Auth extends Component {
 
 
   loginHandler = (event) => {
-
-    alert('login tried!')
-    /*
     event.preventDefault();
+    this.props.onLogin(this.state.loginForm.email.value, this.state.loginForm.password.value, this.state.isSignUp)
+    //alert('login tried!')
+    /*
+    
     const formData = {};
 
     for (let formElemIdentifier in this.state.orderForm) {
@@ -94,6 +97,13 @@ class Auth extends Component {
 
     this.props.onOrderSubmit(order);*/
   };
+
+  signUpInSwitchHandler = (event) => {
+    event.preventDefault();
+    this.setState((prevState) => {
+      return { isSignUp: !prevState.isSignUp }
+    })
+  }
 
   inputChangedHandler = (event, inputIdentifier) => {
     //  console.log(event.target.value);
@@ -138,30 +148,44 @@ class Auth extends Component {
       });
     }
 
-    const formWithElements = formElementsArray.map((item) => {
-      return (
-        <Input
-          key={item.id}
-          invalid={!item.config.valid}
-          touched={item.config.touched}
-          elementType={item.config.elementType}
-          elementConfig={item.config.elementConfig}
-          customMsg={item.config.elementConfig.placeholder}
-          value={item.config.value}
-          shouldValidate={item.config.validation && item.config.touched}
-          changed={(event) => this.inputChangedHandler(event, item.id)}
-        ></Input>
-      );
-    });
+    let formWithElements = <Spinner></Spinner>
+
+    if (!this.props.loading) {
+      formWithElements = formElementsArray.map((item) => {
+        return (
+          <Input
+            key={item.id}
+            invalid={!item.config.valid}
+            touched={item.config.touched}
+            elementType={item.config.elementType}
+            elementConfig={item.config.elementConfig}
+            customMsg={item.config.elementConfig.placeholder}
+            value={item.config.value}
+            shouldValidate={item.config.validation && item.config.touched}
+            changed={(event) => this.inputChangedHandler(event, item.id)}
+          ></Input>
+        );
+      });
+    }
+
+    let errorDiv = null;
+    if (this.props.error) {
+      errorDiv = <div>ERROR On Login ! {this.props.error.message}</div>
+    }
 
     let form = (
       <form onSubmit={this.loginHandler}>
         {formWithElements}
-        <Button btnType="Success" disabled={!this.state.formIsValid}>
+        <Button btnType="Success" >
           LOGIN
           </Button>
+        <Button clicked={this.signUpInSwitchHandler} btnType="Danger" >
+          Sign {this.state.isSignUp ? <b>UP</b> : <b>IN</b>}
+        </Button>
+        {errorDiv}
       </form>
     );
+
 
     return (
       <div className={classes.Auth}>
@@ -176,17 +200,17 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
-    isUserAuthenticed: state.authReducer.isUserAuthenticed
+    error: state.authReducer.error
   }
 
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (userName, password) => {
-      dispatch(authActions.authAttempt(userName, password));
+    onLogin: (userName, password, method) => {
+      dispatch(authActions.authAttempt(userName, password, method));
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(Auth, axios);
