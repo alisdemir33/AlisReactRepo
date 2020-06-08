@@ -53,9 +53,9 @@ export const pruchaseInit = () => {
 };
 
 export const fetchOrders = () => {
-    console.log('before dispatchh')
+    console.log('before dispatchh fetch orders')
     return (dispatch) => {
-    console.log('before dispatch')
+    console.log('before dispatch fetch orders')
     dispatch(fetchOrdersStart())
    
     axios
@@ -73,8 +73,10 @@ export const fetchOrders = () => {
      // this.setState({ orders: fetchedOrders, loading: false });
     })
     .catch((error) => {
+      console.log(error)
       //this.setState({ error: true, loading: false });
         dispatch(fetchOrdersFailed(error))
+       // throw error
     });
 }
 };

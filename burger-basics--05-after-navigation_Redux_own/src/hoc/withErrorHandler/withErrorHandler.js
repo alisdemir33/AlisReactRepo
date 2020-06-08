@@ -22,7 +22,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
     }
 
     render() {
-        return (           
+      console.log('weh is:'+this.state.error) 
+      return (           
          <Auxi>
           <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler}>
             {this.state.error ? <div>{this.state.error.message}</div> :null}
