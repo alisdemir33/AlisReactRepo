@@ -90,13 +90,13 @@ export const fetchOrdersStart = () => {
 export const fetchOrdersSuccess = (orders) => {
   return {
     type: actionTypes.FETCH_ORDERS_SUCCESS,
-    payload: orders,
+    payload: orders
   };
 };
 
 export const fetchOrdersFailed = (error) => {
   return {
     type: actionTypes.FETCH_ORDERS_FAILED,
-    payload: error,
+    payload: error
   };
 };
