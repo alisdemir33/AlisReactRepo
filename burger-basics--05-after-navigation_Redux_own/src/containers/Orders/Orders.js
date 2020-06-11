@@ -14,7 +14,7 @@ class Orders extends Component {
  */
   componentDidMount() {
    console.log('ORders will be fetched..')
-    this.props.onFetchOrders();
+    this.props.onFetchOrders(this.props.token);
 
     console.log('Orders fetched..')
     /* axios
@@ -67,15 +67,16 @@ const mapStateToProps = (state) => {
   return {
     orders : state.orderReducer.orders,
     loading : state.orderReducer.loading,
-    error: state.orderReducer.error
+    error: state.orderReducer.error,
+    token:state.authReducer.token
 
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
 return{
-  onFetchOrders : () =>{ 
-    dispatch(orderActions.fetchOrders());
+  onFetchOrders : (token) =>{ 
+    dispatch(orderActions.fetchOrders(token));
   }
 }
 }

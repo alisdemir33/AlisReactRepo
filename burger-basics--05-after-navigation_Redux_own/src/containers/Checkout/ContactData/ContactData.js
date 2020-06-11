@@ -160,7 +160,7 @@ class ContactData extends Component {
         this.setState({ loading: false });
       }); */
 
-      this.props.onOrderSubmit(order);
+      this.props.onOrderSubmit(order,this.props.token);
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -235,7 +235,8 @@ const mapStateToProps = (state) => {
   return {
     ingredients: state.burgerReducer.ingredients, //state.ResultReducer.results
     totalPrice: state.burgerReducer.totalPrice,
-    loading:state.orderReducer.loading
+    loading:state.orderReducer.loading,
+    token:state.authReducer.token
   };
 };
 /* return {
@@ -246,8 +247,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrderSubmit: (order) => {
-      dispatch(burgerBuilderActions.purchaseOrder(order));
+    onOrderSubmit: (order,token) => {
+      dispatch(burgerBuilderActions.purchaseOrder(order,token));
     },
   };
 };

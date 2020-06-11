@@ -24,12 +24,12 @@ export const purchaseOrderStart = () => {
   };
 };
 
-export const purchaseOrder = (order) => {
+export const purchaseOrder = (order,token) => {
   return (dispatch) => {
     dispatch(purchaseOrderStart());
 
     axios
-      .post("/orders.json", order)
+      .post('/orders.json?auth='+token, order)
       .then((response) => {
         /* this.setState({ loading: false }, () => {
             this.props.history.push("/");
@@ -52,14 +52,15 @@ export const pruchaseInit = () => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     console.log('before dispatchh fetch orders')
     return (dispatch) => {
     console.log('before dispatch fetch orders')
     dispatch(fetchOrdersStart())
    
+   
     axios
-    .get("/orders.json")
+    .get('/orders.json?auth='+token+'')
     .then((response) => {
       console.log('--->'+response);
       const fetchedOrders = [];
