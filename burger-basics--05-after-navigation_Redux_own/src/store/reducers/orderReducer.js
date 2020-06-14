@@ -54,6 +54,7 @@ const fetchOrdersSuccess = (state, action) => {
 const fetchOrdersFailed = (state, action) => {
   return updateObject(state, {
     error: action.payload,
+    orders:[],
     loading: false
   });
 }

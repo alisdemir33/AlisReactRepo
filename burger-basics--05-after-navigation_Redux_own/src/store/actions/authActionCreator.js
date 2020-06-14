@@ -1,72 +1,74 @@
-import * as actions from './actionTypes'
-import axios from 'axios';
+import * as actions from "./actionTypes";
+import axios from "axios";
 export const authStart = () => {
-
-    return {
-        type: actions.AUTH_START
-    }
-
-}
+  return {
+    type: actions.AUTH_START,
+  };
+};
 
 export const authSuccess = (authData) => {
-    return {
-        type: actions.AUTH_SUCCESS,
-        payload: authData
-    }
-
-}
+  return {
+    type: actions.AUTH_SUCCESS,
+    payload: authData,
+  };
+};
 export const authFailed = (error) => {
-    return {
-        type: actions.AUTH_FAILED,
-        payload: error
-
-    }
-}
+  return {
+    type: actions.AUTH_FAILED,
+    payload: error,
+  };
+};
 
 export const authLogOut = (expirationTime) => {
-return {
-    type:actions.AUTH_LOGOUT
-}
-    
-}
+  return {
+    type: actions.AUTH_LOGOUT,
+  };
+};
 
-export const checkAuthTimeout = (expirationTime) =>{
-    return dispatch =>{
-        setTimeout(() => {
-            dispatch (authLogOut());    
-        }, expirationTime*1000);    
-    }
-}
+export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogOut());
+    }, expirationTime * 1000);
+  };
+};
+
+export const logOut = () => {
+  return (dispatch) => {
+    dispatch(authLogOut());
+  };
+};
 
 export const authAttempt = (userName, password, isSignUp) => {
-    return (dispatch) => {
+  return (dispatch) => {
+    const authData = {
+      email: userName,
+      password: password,
+      returnSecureToken: true,
+    };
 
-        const authData = {
-            email: userName,
-            password: password,
-            returnSecureToken: true
-        }
+    console.log(authData);
+    let apiKey = "AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
+    dispatch(authStart());
 
-        console.log(authData)
-        let apiKey = 'AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw';
-        dispatch(authStart());
+    let url = "";
+    if (isSignUp)
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
+    else
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
 
-
-        let url = '';
-        if (isSignUp)
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw'
-        else
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw'
-
-        axios.post(url, authData)
-            .then(response => {
-                console.log(response);
-                dispatch(authSuccess(response.data));
-                dispatch(checkAuthTimeout(response.data.expiresIn))
-            })
-            .catch(error => {
-                console.log(error.response.data.error);
-                dispatch(authFailed(error.response.data.error))
-            })
-    }
-}
+    axios
+      .post(url, authData)
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data));
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error.response.data.error);
+        dispatch(authFailed(error.response.data.error));
+      });
+  };
+};

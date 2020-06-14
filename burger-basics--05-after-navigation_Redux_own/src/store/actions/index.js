@@ -12,6 +12,7 @@ export {
 from './orderActionCreator'
 
 export {
-    authAttempt
+    authAttempt,
+    logOut
 }
 from './authActionCreator'

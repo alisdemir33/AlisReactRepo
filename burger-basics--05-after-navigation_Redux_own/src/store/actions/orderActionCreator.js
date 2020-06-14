@@ -36,6 +36,7 @@ export const purchaseOrder = (order,token) => {
           }); */
         console.log(response.data);
         dispatch(purchaseBurgerSuccess(response.data.name, order));
+        this.props.history.push("/");
        // alert("Order is accepted!");
       })
       .catch((error) => {

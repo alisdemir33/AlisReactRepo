@@ -5,6 +5,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Auth.css";
 import * as authActions from '../../store/actions/index'
 import { connect } from 'react-redux';
+import {Redirect} from 'react-router-dom'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from "axios";
 
@@ -186,6 +187,10 @@ class Auth extends Component {
       </form>
     );
 
+    if(this.props.isAuthenticated){
+        form = <Redirect to='/'></Redirect>
+    }
+
 
     return (
       <div className={classes.Auth}>
@@ -200,7 +205,8 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
-    error: state.authReducer.error
+    error: state.authReducer.error,
+    isAuthenticated: state.authReducer.token !==null
   }
 
 }
