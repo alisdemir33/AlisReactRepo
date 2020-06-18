@@ -19,6 +19,19 @@ export const authFailed = (error) => {
   };
 };
 
+export const setRedirectPath = (path) => {
+  return {
+    type: actions.SET_AUTH_REDIRECT_PATH,
+    payload: path
+  };
+};
+
+export const setAuthRedirectPath = (path) => {
+  return (dispatch) => {
+    dispatch(setRedirectPath(path));
+  };
+};
+
 export const authLogOut = (expirationTime) => {
   return {
     type: actions.AUTH_LOGOUT,
@@ -47,8 +60,8 @@ export const authAttempt = (userName, password, isSignUp) => {
       returnSecureToken: true,
     };
 
-    console.log(authData);
-    let apiKey = "AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
+  //  console.log(authData);
+   
     dispatch(authStart());
 
     let url = "";

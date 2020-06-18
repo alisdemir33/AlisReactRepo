@@ -81,6 +81,11 @@ class Auth extends Component {
     return isValid;
   }
 
+  componentDidMount(){
+    if(!this.props.building &&  this.props.redirectPath !=='/')
+    this.props.onSetAuthRedirectPath()
+  }
+
 
   loginHandler = (event) => {
     event.preventDefault();
@@ -187,8 +192,11 @@ class Auth extends Component {
       </form>
     );
 
-    if(this.props.isAuthenticated){
-        form = <Redirect to='/'></Redirect>
+    if(this.props.isAuthenticated ){
+      if( this.props.building) 
+      form = <Redirect to={this.props.redirectPath}></Redirect>
+      else
+      form = <Redirect to='/'></Redirect>
     }
 
 
@@ -206,7 +214,9 @@ const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
     error: state.authReducer.error,
-    isAuthenticated: state.authReducer.token !==null
+    isAuthenticated: state.authReducer.token !==null,
+    building:state.burgerReducer.building,
+    redirectPath:state.authReducer.authRedirectPath
   }
 
 }
@@ -215,7 +225,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (userName, password, method) => {
       dispatch(authActions.authAttempt(userName, password, method));
-    }
+    },
+    onSetAuthRedirectPath: (path) =>{
+      dispatch (authActions.setAuthRedirectPath('/'))
+    } 
   }
 }
 

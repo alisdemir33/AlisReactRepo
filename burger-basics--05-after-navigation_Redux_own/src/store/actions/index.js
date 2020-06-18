@@ -13,6 +13,7 @@ from './orderActionCreator'
 
 export {
     authAttempt,
-    logOut
+    logOut,
+    setAuthRedirectPath
 }
 from './authActionCreator'

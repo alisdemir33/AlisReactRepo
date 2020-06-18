@@ -5,6 +5,7 @@ const initialState = {
     ingredients: null,
     totalPrice: 4,
     error: false,
+    building:false,
     INGREDIENT_PRICES : {
         salad: 0.5,
         cheese: 0.4,
@@ -28,7 +29,7 @@ const addIngredient = (state, action) => {
     const updatedIngredient = { [action.payload]: state.ingredients[action.payload] + 1 }
     const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
     const updatedTotalPrice = state.totalPrice + state.INGREDIENT_PRICES[action.payload];
-    return updateObject(state, { ingredients: updatedIngredients, totalPrice: updatedTotalPrice });
+    return updateObject(state, { ingredients: updatedIngredients, totalPrice: updatedTotalPrice,building:true });
 
     // ---------------long way ------------------
     /*   oldCount = state.ingredients[action.payload];
@@ -67,7 +68,7 @@ const removeIngredient = (state, action) => {
     const updatedIngredients1 = updateObject(state.ingredients, updatedIngredient1);
 
     const newTotalPrice = state.totalPrice - state.INGREDIENT_PRICES[action.payload];
-    return updateObject(state, { ingredients: updatedIngredients1, totalPrice: newTotalPrice })
+    return updateObject(state, { ingredients: updatedIngredients1, totalPrice: newTotalPrice,building:true })
 
     /*   oldCount = state.ingredients[action.payload];
       if (oldCount <= 0) {
@@ -113,7 +114,8 @@ const initIngredients = (state, action) => {
         {
             ingredients: action.payload,
             totalPrice: state.totalPrice + sum,
-            error: false
+            error: false,
+            building:false
         });
 }
 
