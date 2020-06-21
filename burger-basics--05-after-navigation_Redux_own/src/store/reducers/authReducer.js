@@ -23,7 +23,6 @@ const authReducer = (state = initialState, action) => {
 };
 
 const setRedirect =(state,action) => {
-
   return updateObject(state,
     {
       authRedirectPath:action.payload

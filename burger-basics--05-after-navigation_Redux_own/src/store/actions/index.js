@@ -14,6 +14,7 @@ from './orderActionCreator'
 export {
     authAttempt,
     logOut,
-    setAuthRedirectPath
+    setAuthRedirectPath,
+    authCheckState
 }
 from './authActionCreator'

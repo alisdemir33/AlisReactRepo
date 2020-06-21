@@ -184,7 +184,7 @@ class Auth extends Component {
         {formWithElements}
         <Button btnType="Success" >
           LOGIN
-          </Button>
+        </Button>
         <Button clicked={this.signUpInSwitchHandler} btnType="Danger" >
           Sign {this.state.isSignUp ? <b>UP</b> : <b>IN</b>}
         </Button>
@@ -226,7 +226,7 @@ const mapDispatchToProps = (dispatch) => {
     onLogin: (userName, password, method) => {
       dispatch(authActions.authAttempt(userName, password, method));
     },
-    onSetAuthRedirectPath: (path) =>{
+    onSetAuthRedirectPath: () =>{
       dispatch (authActions.setAuthRedirectPath('/'))
     } 
   }
