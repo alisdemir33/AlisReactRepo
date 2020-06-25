@@ -53,15 +53,16 @@ export const pruchaseInit = () => {
   };
 };
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token,userId) => {
     console.log('before dispatchh fetch orders')
     return (dispatch) => {
     console.log('before dispatch fetch orders')
     dispatch(fetchOrdersStart())
    
+    const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
    
     axios
-    .get('/orders.json?auth='+token+'')
+    .get('/orders.json'+queryParams)
     .then((response) => {
       console.log('--->'+response);
       const fetchedOrders = [];

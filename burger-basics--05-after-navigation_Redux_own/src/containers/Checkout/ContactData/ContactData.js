@@ -145,6 +145,7 @@ class ContactData extends Component {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
       orderData: formData,
+      userId:this.props.userId
     };
 
   /*   axios
@@ -236,7 +237,8 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerReducer.ingredients, //state.ResultReducer.results
     totalPrice: state.burgerReducer.totalPrice,
     loading:state.orderReducer.loading,
-    token:state.authReducer.token
+    token:state.authReducer.token,
+    userId:state.authReducer.userId
   };
 };
 /* return {
