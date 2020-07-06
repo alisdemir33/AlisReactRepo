@@ -6,7 +6,7 @@ import classes from "./Auth.css";
 import * as authActions from '../../store/actions/index'
 import { connect } from 'react-redux';
 import {Redirect} from 'react-router-dom'
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+//import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from "axios";
 
 class Auth extends Component {

@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as burgerBuilderActions from "../../../store/actions/index";
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import {updateObject} from '../../../shared/util'
 
 class ContactData extends Component {
   state = {
@@ -168,6 +169,7 @@ class ContactData extends Component {
   //  console.log(event.target.value);
     const orderFormCopy = { ...this.state.orderForm };
     const clonedFormElement = { ...orderFormCopy[inputIdentifier] };
+    
     clonedFormElement.value = event.target.value;
     clonedFormElement.touched = true;
     clonedFormElement.valid = this.checkValidity(
