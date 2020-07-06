@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {Redirect} from 'react-router-dom'
 //import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from "axios";
+import {updateObject} from '../../shared/util'
 
 class Auth extends Component {
 
@@ -113,7 +114,9 @@ class Auth extends Component {
 
   inputChangedHandler = (event, inputIdentifier) => {
     //  console.log(event.target.value);
-    const formCopy = { ...this.state.loginForm };
+    /* const formCopy = { ...this.state.loginForm };
+   
+   
     const clonedFormElement = { ...formCopy[inputIdentifier] };
     clonedFormElement.value = event.target.value;
     clonedFormElement.touched = true;
@@ -121,7 +124,23 @@ class Auth extends Component {
       event.target.value,
       clonedFormElement.validation
     );
-    formCopy[inputIdentifier] = clonedFormElement;
+    formCopy[inputIdentifier] = clonedFormElement; */
+
+const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
+  {
+    value:event.target.value,
+    touched:true,
+    valid:this.checkValidity(
+      event.target.value,
+      this.state.loginForm[inputIdentifier].validation
+    )
+  })
+
+  const formCopy = updateObject(this.state.loginForm,
+    {
+      [inputIdentifier] : clonedFormElement
+    })
+
 
     let formIsValid = true;
     for (let identifier in formCopy) {

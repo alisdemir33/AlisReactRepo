@@ -167,16 +167,29 @@ class ContactData extends Component {
 
   inputChangedHandler = (event, inputIdentifier) => {
   //  console.log(event.target.value);
-    const orderFormCopy = { ...this.state.orderForm };
-    const clonedFormElement = { ...orderFormCopy[inputIdentifier] };
+   // const orderFormCopy = { ...this.state.orderForm };
+    const clonedFormElement =   updateObject(this.state.orderForm[inputIdentifier],
+      {
+        value:event.target.value,
+        touched:true,
+        valid:this.checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        )
+    } );
+
+    const orderFormCopy =  updateObject(this.state.orderForm, 
+      {
+        [inputIdentifier]:clonedFormElement
+      })
     
-    clonedFormElement.value = event.target.value;
+   /*  clonedFormElement.value = event.target.value;
     clonedFormElement.touched = true;
     clonedFormElement.valid = this.checkValidity(
       event.target.value,
       clonedFormElement.validation
-    );
-    orderFormCopy[inputIdentifier] = clonedFormElement;
+    ); */    
+   // orderFormCopy[inputIdentifier] = clonedFormElement;
 
     let formIsValid = true;
     for (let identifier in orderFormCopy) {
