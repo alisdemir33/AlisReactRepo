@@ -49,7 +49,7 @@ class BurgerBuilder extends Component {
    }
  
   updatePurchaseState() {
-  let result=false;
+  
     const sum = Object.keys(this.props.ingredients)
       .map(igKey => {
         return this.props.ingredients[igKey];
@@ -57,7 +57,7 @@ class BurgerBuilder extends Component {
       .reduce((sum, el) => {
         return sum + el;
       }, 0);
-      result = sum > 0
+   
     return sum > 0 ;
   // this.setState({purchasable : result })
   }

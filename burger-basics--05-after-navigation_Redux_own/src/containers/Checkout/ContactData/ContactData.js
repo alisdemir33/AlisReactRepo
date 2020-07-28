@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as burgerBuilderActions from "../../../store/actions/index";
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import {updateObject} from '../../../shared/util'
 
 class ContactData extends Component {
   state = {
@@ -145,6 +146,7 @@ class ContactData extends Component {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
       orderData: formData,
+      userId:this.props.userId
     };
 
   /*   axios
@@ -165,15 +167,29 @@ class ContactData extends Component {
 
   inputChangedHandler = (event, inputIdentifier) => {
   //  console.log(event.target.value);
-    const orderFormCopy = { ...this.state.orderForm };
-    const clonedFormElement = { ...orderFormCopy[inputIdentifier] };
-    clonedFormElement.value = event.target.value;
+   // const orderFormCopy = { ...this.state.orderForm };
+    const clonedFormElement =   updateObject(this.state.orderForm[inputIdentifier],
+      {
+        value:event.target.value,
+        touched:true,
+        valid:this.checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        )
+    } );
+
+    const orderFormCopy =  updateObject(this.state.orderForm, 
+      {
+        [inputIdentifier]:clonedFormElement
+      })
+    
+   /*  clonedFormElement.value = event.target.value;
     clonedFormElement.touched = true;
     clonedFormElement.valid = this.checkValidity(
       event.target.value,
       clonedFormElement.validation
-    );
-    orderFormCopy[inputIdentifier] = clonedFormElement;
+    ); */    
+   // orderFormCopy[inputIdentifier] = clonedFormElement;
 
     let formIsValid = true;
     for (let identifier in orderFormCopy) {
@@ -236,7 +252,8 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerReducer.ingredients, //state.ResultReducer.results
     totalPrice: state.burgerReducer.totalPrice,
     loading:state.orderReducer.loading,
-    token:state.authReducer.token
+    token:state.authReducer.token,
+    userId:state.authReducer.userId
   };
 };
 /* return {
