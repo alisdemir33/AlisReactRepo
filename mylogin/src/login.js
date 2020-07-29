@@ -72,10 +72,15 @@ console.log(props);
     if (redirectToReferrer === true) {
      // alert(this.props.redirectedFrom+' --- '+this.props.redirectedFrom+'***'+ `${this.props.redirectedFrom}`)
       /*  return <Redirect to ={`${this.props.ftom}`} />  */
-      debugger
+      ;debugger
       console.log(this.props);
     /*  this.props.history.push(`${this.props.redirectedFrom}`); */
-     return <Redirect push to = {this.props.location.redirectAfterLogin.comingFrom} />    
+
+    if(this.props.location.redirectAfterLogin)
+     return <Redirect push to = {this.props.location.redirectAfterLogin.comingFrom} />  
+     else
+     return <Redirect push to ='/'></Redirect>
+
   /*   return <Redirect push to = {this.props.redirectedFrom} /> */
  
    

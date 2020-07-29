@@ -28,7 +28,8 @@ export const ProtectedRoute = ({
             />
           );
         }
-      }}
+      }
+    }
     />
   );
 };
