@@ -35,7 +35,7 @@ class BurgerBuilder extends Component {
   };
 
    componentDidMount() {
-    this.props.onInitIngredient();
+    this.props.onInitIngredient(this.props.token);
     /*  console.log(this.props)
      axios
        .get("/ingredients.json")
@@ -203,7 +203,8 @@ const mapStateToProps = state => {
     ingredients: state.burgerReducer.ingredients, //state.ResultReducer.results
     totalPrice: state.burgerReducer.totalPrice,
     error:state.burgerReducer.error ,
-    isAuthenticated:state.authReducer.token !== null
+    isAuthenticated:state.authReducer.token !== null,
+    token:state.authReducer.token
   };
 
 };
@@ -219,8 +220,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch( burgerBuilderActions.removeIngredient(itemValue));    
     },
 
-    onInitIngredient : () => {
-      dispatch (burgerBuilderActions.initIngredientsFromServer());
+    onInitIngredient : (token) => {
+      dispatch (burgerBuilderActions.initIngredientsFromServer(token));
     },
 
     onPurchaseInit: () => {

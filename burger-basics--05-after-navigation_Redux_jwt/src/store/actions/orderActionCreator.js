@@ -60,9 +60,16 @@ export const fetchOrders = (token,userId) => {
     dispatch(fetchOrdersStart())
    
     const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
+
+    const  jwtConfig = {
+      headers: {
+         Authorization: "Bearer " + token
+      }
+   }
    
     axios
-    .get('/orders.json'+queryParams)
+    //.get('/orders.json'+queryParams)
+    .get('/GetOrders',jwtConfig)
     .then((response) => {
       console.log('--->'+response);
       const fetchedOrders = [];

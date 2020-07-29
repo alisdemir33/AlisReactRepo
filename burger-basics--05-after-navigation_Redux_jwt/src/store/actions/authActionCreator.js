@@ -1,10 +1,10 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
 
-export const authAttempt = (userName, password, isSignUp) => {
+export const authAttempt = (username, password, isSignUp) => {
   return (dispatch) => {
     const authData = {
-      email: userName,
+      email: username,
       password: password,
       returnSecureToken: true,
     };
@@ -16,28 +16,43 @@ export const authAttempt = (userName, password, isSignUp) => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
     else
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
+      url ="https://localhost:44384/sample/authenticate";
+      
+    var postData = {
+      Username: username,
+      Password: password
+    };
+    
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
 
-    axios
-      .post(url, authData)
+    
+      axios
+      .post(url, postData, axiosConfig)
       .then((response) => {
         console.log(response);
         const expirationDate = new Date(
-          new Date().getTime() + response.data.expiresIn * 1000
+          new Date().getTime() + 600//response.data.expiresIn
+           * 1000
         );
 
-        localStorage.setItem("token", response.data.idToken);
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("expirationDateTime", expirationDate);
-        localStorage.setItem("userId",response.data.localId);
+        localStorage.setItem("userId",response.data.username);
 
         dispatch(authSuccess(response.data));
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((error) => {
-        console.log(error.response.data.error);
+        console.log(error);
         dispatch(authFailed(error.response.data.error));
       });
+
+
   };
 };
 

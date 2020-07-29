@@ -34,11 +34,19 @@ export const initIngredientsFailed = () => {
     }
 }
 
-export const initIngredientsFromServer = () => {
+export const initIngredientsFromServer = (token) => {
 
     return (dispatch) => {
+     
+      const  jwtConfig = {
+            headers: {
+               Authorization: "Bearer " + token
+            }
+         }
+     
+     
         axios
-            .get("/ingredients.json")
+            .get("/sample/GetIngredients", jwtConfig )
             .then(response => {
                 console.log(response.data);
                 //this.setState({ ingredients: response.data });
