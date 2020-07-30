@@ -69,7 +69,7 @@ export const fetchOrders = (token,userId) => {
    
     axios
     //.get('/orders.json'+queryParams)
-    .get('/GetOrders',jwtConfig)
+    .get('/Sample/GetOrders',jwtConfig)
     .then((response) => {
       console.log('--->'+response);
       const fetchedOrders = [];

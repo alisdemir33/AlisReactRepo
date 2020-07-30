@@ -17,7 +17,7 @@ export const authAttempt = (username, password, isSignUp) => {
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAxpnatOOvVFVw0-A_jnKLBadI_Rh43_Mw";
     else
       url ="https://localhost:44384/sample/authenticate";
-      
+
     var postData = {
       Username: username,
       Password: password
@@ -45,7 +45,8 @@ export const authAttempt = (username, password, isSignUp) => {
         localStorage.setItem("userId",response.data.username);
 
         dispatch(authSuccess(response.data));
-        dispatch(checkAuthTimeout(response.data.expiresIn));
+        dispatch(checkAuthTimeout(600));
+        //dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((error) => {
         console.log(error);
@@ -64,7 +65,9 @@ export const authCheckState = () => {
       dispatch(logOut());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDateTime"));
+      console.log(expirationDate);
       if (expirationDate < new Date()) {
+        console.log('kucuk!');
         dispatch(logOut());
       } else {
         dispatch(authSuccess({idToken:token, localId : localStorage.getItem("userId")}));
