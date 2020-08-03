@@ -59,7 +59,7 @@ export const fetchOrders = (token,userId) => {
     console.log('before dispatch fetch orders')
     dispatch(fetchOrdersStart())
    
-    const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
+    const queryparams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
 
     const  jwtConfig = {
       headers: {
