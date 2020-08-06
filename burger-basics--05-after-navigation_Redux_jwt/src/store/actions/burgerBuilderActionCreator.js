@@ -38,12 +38,13 @@ export const initIngredientsFromServer = (token) => {
 
     return (dispatch) => {
      
-      const  jwtConfig = {
+        ;debugger
+        const  jwtConfig = {
             headers: {
-               Authorization: "Bearer " + token
+               Authorization: "Bearer " + token.accessToken
             }
          }
-     
+    
      
         axios
             .get("/sample/GetIngredients", jwtConfig )

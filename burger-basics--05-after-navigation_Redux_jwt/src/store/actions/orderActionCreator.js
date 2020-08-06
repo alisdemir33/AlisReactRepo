@@ -63,7 +63,7 @@ export const fetchOrders = (token,userId) => {
 
     const  jwtConfig = {
       headers: {
-         Authorization: "Bearer " + token
+         Authorization: "Bearer " + token.accessToken
       }
    }
    
