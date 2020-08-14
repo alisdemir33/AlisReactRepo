@@ -4,7 +4,7 @@ import { updateObject } from '../../shared/util'
 
 
 const initialState = {
-  token: null,
+ // token: null,
   userId: null,
   error: null,
   loading: false,
@@ -39,8 +39,8 @@ const authStart = (state, action) => {
 const authSuccess = (state, action) => {
   return updateObject(state,
     {
-      userId: action.payload.username,
-      token: action.payload.token,
+      userId: action.payload.user.id,
+      //token: action.payload.token,
       error:null,
       loading: false
     });
@@ -49,8 +49,8 @@ const authSuccess = (state, action) => {
 const authLogOut = (state,action) => {
   return updateObject(state,
     {
-      userId: null,
-      token: null     
+      userId: null
+     // token: null     
     });
 
 }

@@ -26,7 +26,7 @@ class Auth extends Component {
         touched: false,
         validation: {
           required: true,
-          isEmail: true
+          isNumeric: true
         },
         valid: false,
       },
@@ -233,7 +233,7 @@ const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
     error: state.authReducer.error,
-    isAuthenticated: state.authReducer.token !==null,
+    isAuthenticated: state.authReducer.userId !==null,
     building:state.burgerReducer.building,
     redirectPath:state.authReducer.authRedirectPath
   }

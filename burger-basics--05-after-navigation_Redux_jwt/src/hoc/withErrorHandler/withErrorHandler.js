@@ -22,6 +22,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
           this.setState({ error: error });
          
           ;debugger
+          
           return new Promise((resolve, reject) => {
             const originalReq = error.config;
             if (
@@ -31,7 +32,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             ) {
               originalReq._retry = true;
 
-              let res = fetch("https://localhost:44384/sample/refreshToken", {
+              let res = fetch("https://localhost:44384/sample/RefreshToken", {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
@@ -39,23 +40,32 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 headers: {
                   "Content-Type": "application/json",
                   Device: "device",
-                  Token: localStorage.getItem("token").accessToken,
+                  Token: localStorage.getItem("accessToken"),
                 },
                 redirect: "follow",
                 referrer: "no-referrer",
                 body: JSON.stringify({
-                  token: localStorage.getItem("token"),
-                  refreshToken: localStorage.getItem("token").refreshToken,
+                 // token: localStorage.getItem("token").accessToken,
+                  RefreshToken: localStorage.getItem("refreshToken")
                 }),
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  console.log(res);
-                  this.setSession({
-                    token: res.token,
-                    refreshToken: res.refresh,
-                  });
-                  originalReq.headers["Token"] = res.token;
+                 
+                  ;debugger
+                  console.log('REsponse:'+res);
+
+                /*   const expirationDate = new Date(
+                    new Date().getTime() + 300//response.data.expiresIn
+                     * 1000
+                  ); */
+
+                  localStorage.setItem("accessToken", res.token.accessToken);
+                  localStorage.setItem("refreshToken", res.token.refreshToken);
+                  localStorage.setItem("expirationDateTime", res.token.expiration);                
+
+                  originalReq.headers["Token"] = res.token.accessToken;
+                  originalReq.headers.Authorization  = "Bearer "+res.token.accessToken;
                   originalReq.headers["Device"] = "device";
 
                   return axios(originalReq);
@@ -96,4 +106,5 @@ const withErrorHandler = (WrappedComponent, axios) => {
   };
 };
 
-export default withErrorHandler;
+
+export default  withErrorHandler;

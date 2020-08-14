@@ -35,31 +35,39 @@ export const authAttempt = (username, password, isSignUp) => {
       .post(url, postData, axiosConfig)
       .then((response) => {
         console.log(response);
-        const expirationDate = new Date(
-          new Date().getTime() + 600//response.data.expiresIn
+       
+        /* const expirationDate = new Date(
+          new Date().getTime() + 180//response.data.token.expiration;expiresIn
            * 1000
-        );
+        ); */
 
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("expirationDateTime", expirationDate);
-        localStorage.setItem("userId",response.data.username);
+        ;debugger
+
+       // localStorage.setItem("token", response.data.token);
+        
+        localStorage.setItem("accessToken", response.data.token.accessToken);
+        localStorage.setItem("refreshToken", response.data.token.refreshToken);
+        localStorage.setItem("expirationDateTime", response.data.token.expiration);
+
+        localStorage.setItem("userId",response.data.user.id);
 
         dispatch(authSuccess(response.data));
-        dispatch(checkAuthTimeout(600));
+      
+       // dispatch(checkAuthTimeout(response.data.token.expiration));
         //dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((error) => {
         console.log(error);
         dispatch(authFailed(error.response.data.error));
       });
-
-
   };
 };
 
+//App den sayfa reload olunca reduxtan uçan token bilgisi local storage dan kontrol ediliyor..
 export const authCheckState = () => {
   return (dispatch) => {
-    const token = localStorage.getItem("token");
+    
+    const token = localStorage.getItem("accessToken");
    
     if (!token) {
       dispatch(logOut());
@@ -70,8 +78,8 @@ export const authCheckState = () => {
         console.log('kucuk!');
         dispatch(logOut());
       } else {
-        dispatch(authSuccess({idToken:token, localId : localStorage.getItem("userId")}));
-        dispatch(checkAuthTimeout((expirationDate.getTime()- (new Date().getTime()))/1000));
+        dispatch(authSuccess({idToken:token, userId : localStorage.getItem("userId")}));
+      //  dispatch(checkAuthTimeout((expirationDate.getTime() - (new Date().getTime()))/1000));
       }
     }
   };
@@ -84,19 +92,25 @@ export const setAuthRedirectPath = (path) => {
   };
 };
 
-export const checkAuthTimeout = (expirationTime) => {
+//expirationTime dolduğunda otomatik logout yapıyor..
+/* export const checkAuthTimeout = (expirationTime) => {
+  console.log('BEFORE AUTO LOGOUT:'+(expirationTime))
   return (dispatch) => {
     setTimeout(() => {
       dispatch(authLogOut());
-    }, expirationTime * 1000);
+      console.log('AUTO LOGOUT:'+(300 * 1000))
+    // dispatch(authCheckState());
+    }, (300 * 1000));
   };
-};
+}; */
 
 export const logOut = () => {
   
-  localStorage.removeItem("token");
+  //localStorage.removeItem("token");
   localStorage.removeItem("expirationDateTime");
   localStorage.removeItem("userId");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
   
   return (dispatch) => {
     dispatch(authLogOut());

@@ -36,15 +36,16 @@ export const initIngredientsFailed = () => {
 
 export const initIngredientsFromServer = (token) => {
 
-    return (dispatch) => {
-     
-        ;debugger
-        const  jwtConfig = {
+    return (dispatch) => {     
+       ;debugger
+        let  jwtConfig=null;
+         
+        jwtConfig = {
             headers: {
-               Authorization: "Bearer " + token.accessToken
+               Authorization: "Bearer " + localStorage.getItem("accessToken")//token.accessToken
             }
-         }
-    
+         }      
+
      
         axios
             .get("/sample/GetIngredients", jwtConfig )
@@ -59,5 +60,6 @@ export const initIngredientsFromServer = (token) => {
             });
     }
 }
+
 
 

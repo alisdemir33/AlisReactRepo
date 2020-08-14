@@ -53,19 +53,21 @@ export const pruchaseInit = () => {
   };
 };
 
-export const fetchOrders = (token,userId) => {
+export const fetchOrders = (userId) => {
     console.log('before dispatchh fetch orders')
     return (dispatch) => {
     console.log('before dispatch fetch orders')
     dispatch(fetchOrdersStart())
    
-    const queryparams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
+   // const queryparams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
+      
+   const jwtConfig = {
+        headers: {
+           Authorization: "Bearer " + localStorage.getItem("accessToken")//token.accessToken
+        }
+     }
+   
 
-    const  jwtConfig = {
-      headers: {
-         Authorization: "Bearer " + token.accessToken
-      }
-   }
    
     axios
     //.get('/orders.json'+queryParams)
