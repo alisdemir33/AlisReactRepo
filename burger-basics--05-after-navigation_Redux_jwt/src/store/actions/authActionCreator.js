@@ -57,8 +57,12 @@ export const authAttempt = (username, password, isSignUp) => {
         //dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((error) => {
+        ;debugger
         console.log(error);
+       if(error.response!=null || error.response !== undefined)
         dispatch(authFailed(error.response.data.error));
+        else
+        dispatch(authFailed('Sunucu Erişim Hatası!'));
       });
   };
 };

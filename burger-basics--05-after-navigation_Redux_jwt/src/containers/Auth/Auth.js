@@ -9,6 +9,7 @@ import {Redirect} from 'react-router-dom'
 //import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from "axios";
 import {updateObject} from '../../shared/util'
+import LoginExplanation from './LoginExplanation';
 
 class Auth extends Component {
 
@@ -20,7 +21,7 @@ class Auth extends Component {
         elementType: "email",
         elementConfig: {
           type: "text",
-          placeholder: "Your Email",
+          placeholder: "TC Kimlik Numarası",
         },
         value: "",
         touched: false,
@@ -35,7 +36,7 @@ class Auth extends Component {
         elementType: "input",
         elementConfig: {
           type: "password",
-          placeholder: "Password",
+          placeholder: "Şifre",
         },
         value: "",
         touched: false,
@@ -107,9 +108,10 @@ class Auth extends Component {
 
   signUpInSwitchHandler = (event) => {
     event.preventDefault();
-    this.setState((prevState) => {
+    this.props.history.push('/signup')
+   /*  this.setState((prevState) => {
       return { isSignUp: !prevState.isSignUp }
-    })
+    }) */
   }
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -195,19 +197,21 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
 
     let errorDiv = null;
     if (this.props.error) {
-      errorDiv = <div>ERROR On Login ! {this.props.error.message}</div>
+      errorDiv = <div>Sisteme Girişte Hata Oluştu!: {this.props.error}</div>
     }
 
     let form = (
       <form onSubmit={this.loginHandler}>
+       <div style={{margin: '5px 0px 20px 5px', width: 'auto', backgroundColor: '#B72327', color: 'White', padding: '5px 0px 5px 15px', textAlign: 'center'}}>BAŞVURU GİRİŞ FORMU</div>
         {formWithElements}
         <Button btnType="Success" >
-          LOGIN
+          GİRİŞ
         </Button>
         <Button clicked={this.signUpInSwitchHandler} btnType="Danger" >
-          Sign {this.state.isSignUp ? <b>UP</b> : <b>IN</b>}
+          ÜYE OL 
         </Button>
         {errorDiv}
+        <LoginExplanation></LoginExplanation>
       </form>
     );
 
@@ -217,7 +221,6 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
       else
       form = <Redirect to='/'></Redirect>
     }
-
 
     return (
       <div className={classes.Auth}>
