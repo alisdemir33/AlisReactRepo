@@ -1,0 +1,12 @@
+.Card {
+    background-color: white;
+    padding: 8px;
+    height: 180px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 180px;
+}
+
+.Card img {
+    height: 100%;
+}

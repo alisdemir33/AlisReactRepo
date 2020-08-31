@@ -10,6 +10,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { updateObject } from "../../shared/util";
 import SignupExplanation from "./SignupExplanation";
+import CardImage from '../../components/IdentityCard/IdCard'
 
 class Signup extends Component {
   state = {
@@ -306,9 +307,11 @@ class Signup extends Component {
         >
           YENİ ÜYE KAYIT FORMU
         </div>
+       
+        {formWithElements}
         <input type="checkbox" onChange={this.handleChecked} />
         Yeni Kimlik Sahibiyim!
-        {formWithElements}
+          < CardImage cardType={this.state.isNewIdCard}></CardImage>
         <Button btnType="Success">KAYDET</Button>
         <Button clicked={this.redirectToLoginHandler} btnType="Danger">
           GİRİŞ
