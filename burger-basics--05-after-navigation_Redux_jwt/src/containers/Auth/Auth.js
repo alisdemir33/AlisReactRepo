@@ -92,15 +92,14 @@ class Auth extends Component {
   loginHandler = (event) => {
     event.preventDefault();
     this.props.onLogin(this.state.loginForm.email.value, this.state.loginForm.password.value, this.state.isSignUp)
+    
     //alert('login tried!')
     /*
     
     const formData = {};
 
     for (let formElemIdentifier in this.state.orderForm) {
-      formData[formElemIdentifier] = this.state.orderForm[
-        formElemIdentifier
-      ].value;
+      formData[formElemIdentifier] = this.state.orderForm[formElemIdentifier].value;
     } 
 
     this.props.onOrderSubmit(order);*/

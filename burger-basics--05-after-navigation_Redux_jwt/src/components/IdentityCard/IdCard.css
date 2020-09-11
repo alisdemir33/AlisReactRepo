@@ -3,8 +3,8 @@
     padding: 8px;
     height: 180px;
     box-sizing: border-box;
-    border-radius: 5px;
-    width: 180px;
+    border-radius: 5px;   
+    align-self: center;
 }
 
 .Card img {

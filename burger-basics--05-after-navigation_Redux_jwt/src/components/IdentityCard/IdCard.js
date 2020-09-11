@@ -12,7 +12,7 @@ const CardImage = (props) => {
   else cardName = IdCardOld;
   
   return (
-    <div className={classes.Card} style={{ height: props.height }}>
+    <div className={classes.Card} style={{ height: props.height, align:"center" }}>
       <img src={cardName} alt="MyBurger" />
     </div>
   );

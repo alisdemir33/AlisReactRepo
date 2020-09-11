@@ -10,7 +10,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { updateObject } from "../../shared/util";
 import SignupExplanation from "./SignupExplanation";
-import CardImage from '../../components/IdentityCard/IdCard'
+import CardImage from "../../components/IdentityCard/IdCard";
 
 class Signup extends Component {
   state = {
@@ -61,8 +61,6 @@ class Signup extends Component {
         valid: false,
       },
 
-     
-
       email: {
         elementType: "email",
         elementConfig: {
@@ -73,7 +71,7 @@ class Signup extends Component {
         touched: false,
         validation: {
           required: true,
-          isNumeric: true,
+          isEmail: true,
         },
         valid: false,
       },
@@ -88,7 +86,7 @@ class Signup extends Component {
         touched: false,
         validation: {
           required: true,
-          isNumeric: true,
+          isEmail: true,
         },
         valid: false,
       },
@@ -121,11 +119,11 @@ class Signup extends Component {
         },
         valid: false,
       },
-
     },
     formIsValid: false,
     loading: false,
     isNewIdCard: false,
+    error: "",
   };
 
   checkValidity(value, rules) {
@@ -167,10 +165,8 @@ class Signup extends Component {
     this.setState({ isNewIdCard: !this.state.isNewIdCard });
 
     var formCopy = this.state.signUpForm;
-    if (!this.state.isNewIdCard) {     
-     
+    if (!this.state.isNewIdCard) {
       delete formCopy.cuzdanNo;
-
     } else {
       formCopy.cuzdanNo = {
         elementType: "input",
@@ -190,34 +186,48 @@ class Signup extends Component {
     this.setState({ signUpForm: formCopy });
   };
 
-  loginHandler = (event) => {
+  signupHandler = (event) => {
     event.preventDefault();
-    this.props.onSignup(
-      this.state.loginForm.email.value,
-      this.state.loginForm.password.value,
-      this.state.isSignUp
-    );
-    //alert('login tried!')
-    /*
-    
-    const formData = {};
 
-    for (let formElemIdentifier in this.state.orderForm) {
-      formData[formElemIdentifier] = this.state.orderForm[
+    this.setState({ loading: true });
+
+    const formData = {};
+    for (let formElemIdentifier in this.state.signUpForm) {
+      formData[formElemIdentifier] = this.state.signUpForm[
         formElemIdentifier
       ].value;
-    } 
+    }
 
-    this.props.onOrderSubmit(order);*/
+    // dispatch(signupStart());
+
+    let url = "https://localhost:44384/sample/signup";
+
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    axios
+      .post(url, formData, axiosConfig)
+      .then((response) => {
+        console.log(response);
+        this.setState({ loading: false });
+      })
+      .catch((error) => {
+        debugger;
+        console.log(error);
+        if (error.response != null || error.response !== undefined)
+          this.setState({ error: error.response.message, loading: false });
+        // dispatch(signupFailed(error.response.data.error));
+        else this.setState({ error: "Bağlantı hatası!", loading: false });
+      });
   };
 
   redirectToLoginHandler = (event) => {
     event.preventDefault();
     this.props.history.push("/auth");
-    /* this.setState((prevState) => {
-      return { isSignUp: !prevState.isSignUp };
-    }); */
-    // alert('Redirect o login page..')
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -246,19 +256,6 @@ class Signup extends Component {
     this.setState({ signUpForm: formCopy, formIsValid: formIsValid });
   };
 
-  /* inputChangedHandler = (event, controlName) => {
-     const updatedControls = {
-         ...this.state.controls,
-         [controlName]: {
-             ...this.state.controls[controlName],
-             value: event.target.value,
-             valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-             touched: true
-         }
-     };
-     this.setState({controls: updatedControls});
- }*/
-
   render() {
     const formElementsArray = [];
     for (let key in this.state.signUpForm) {
@@ -268,9 +265,19 @@ class Signup extends Component {
       });
     }
 
+    let mainFormBody = <Spinner></Spinner>;
+
+    let checkBoxRelated = (
+      <div>
+        <input type="checkbox" onChange={this.handleChecked} />
+        Yeni Kimlik Sahibiyim!
+        <CardImage cardType={this.state.isNewIdCard}></CardImage>
+      </div>
+    );
+
     let formWithElements = <Spinner></Spinner>;
 
-    if (!this.props.loading) {
+    if (!this.state.loading) {
       formWithElements = formElementsArray.map((item) => {
         return (
           <Input
@@ -286,15 +293,22 @@ class Signup extends Component {
           ></Input>
         );
       });
+
+      mainFormBody = (
+        <div>
+          {formWithElements}
+          {checkBoxRelated}
+        </div>
+      );
     }
 
     let errorDiv = null;
-    if (this.props.error) {
-      errorDiv = <div>ERROR On Login ! {this.props.error.message}</div>;
+    if (this.state.error) {
+      errorDiv = <div>ERROR On Login ! {this.state.error.message}</div>;
     }
 
     let form = (
-      <form onSubmit={this.loginHandler}>
+      <form onSubmit={this.signupHandler}>
         <div
           style={{
             margin: "5px 0px 20px 5px",
@@ -307,11 +321,9 @@ class Signup extends Component {
         >
           YENİ ÜYE KAYIT FORMU
         </div>
-       
-        {formWithElements}
-        <input type="checkbox" onChange={this.handleChecked} />
-        Yeni Kimlik Sahibiyim!
-          < CardImage cardType={this.state.isNewIdCard}></CardImage>
+
+        {mainFormBody}
+
         <Button btnType="Success">KAYDET</Button>
         <Button clicked={this.redirectToLoginHandler} btnType="Danger">
           GİRİŞ
@@ -321,11 +333,11 @@ class Signup extends Component {
       </form>
     );
 
-    if (this.props.isAuthenticated) {
+    /*    if (this.props.isAuthenticated) {
       if (this.props.building)
         form = <Redirect to={this.props.redirectPath}></Redirect>;
       else form = <Redirect to="/"></Redirect>;
-    }
+    } */
 
     return <div className={classes.Auth}>{form}</div>;
   }
@@ -343,9 +355,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (userName, password, method) => {
-      dispatch(authActions.authAttempt(userName, password, method));
-    },
+    /*   onSignup: (formData) => {
+      dispatch(authActions.signupAttempt(formData));
+    }, */
     onSetAuthRedirectPath: () => {
       dispatch(authActions.setAuthRedirectPath("/"));
     },

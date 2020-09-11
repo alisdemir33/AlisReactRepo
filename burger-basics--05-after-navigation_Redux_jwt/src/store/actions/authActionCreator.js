@@ -1,14 +1,52 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
 
+/* export const signupAttempt =(signupFormData) => {
+return (dispatch ) => {
+
+  dispatch(signupStart());
+
+  let url = "https://localhost:44384/sample/signup";  
+    
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+    
+      axios
+      .post(url, signupFormData, axiosConfig)
+      .then((response) => {
+        console.log(response);
+
+        dispatch(signupSuccess(response.data));
+      
+       // dispatch(checkAuthTimeout(response.data.token.expiration));
+        //dispatch(checkAuthTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        ;debugger
+        console.log(error);
+       if(error.response!=null || error.response !== undefined)
+        dispatch(signupFailed(error.response.data.error));
+        else
+        dispatch(signupFailed('Sunucu Erişim Hatası!'));
+      });
+  };
+
+}
+ */
+
+
 export const authAttempt = (username, password, isSignUp) => {
   return (dispatch) => {
-    const authData = {
+ /*    const authData = {
       email: username,
       password: password,
       returnSecureToken: true,
     };
-   
+    */
     dispatch(authStart());// state 
 
     let url = "";
@@ -66,6 +104,9 @@ export const authAttempt = (username, password, isSignUp) => {
       });
   };
 };
+
+
+
 
 //App den sayfa reload olunca reduxtan uçan token bilgisi local storage dan kontrol ediliyor..
 export const authCheckState = () => {
@@ -140,6 +181,28 @@ export const authFailed = (error) => {
     payload: error,
   };
 };
+
+
+/* export const signupStart = () => {
+  return {
+    type: actions.SIGNUP_START,
+  };
+};
+
+export const signupSuccess = (authData) => {
+  return {
+    type: actions.SIGNUP_SUCCESS,
+    payload: authData,
+  };
+};
+export const signupFailed = (error) => {
+  return {
+    type: actions.SIGNUP_FAILED,
+    payload: error,
+  };
+}; */
+
+
 
 export const setRedirectPath = (path) => {
   return {
