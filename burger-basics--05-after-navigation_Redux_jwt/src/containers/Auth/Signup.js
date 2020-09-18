@@ -269,7 +269,7 @@ class Signup extends Component {
 
     let checkBoxRelated = (
       <div>
-        <input type="checkbox" onChange={this.handleChecked} />
+        <input type="checkbox" onChange={this.handleChecked} checked={this.state.isNewIdCard} />
         Yeni Kimlik Sahibiyim!
         <CardImage cardType={this.state.isNewIdCard}></CardImage>
       </div>
