@@ -82,16 +82,16 @@ export const authAttempt = (username, password, isSignUp) => {
           dispatch(authFailed(response.data.resultExplanation));
         }
         else {
-          localStorage.setItem("accessToken", response.data.token.accessToken);
-          localStorage.setItem("refreshToken",response.data.token.refreshToken);
+          localStorage.setItem("accessToken", response.data.resultData.token.accessToken);
+          localStorage.setItem("refreshToken",response.data.resultData.token.refreshToken);
           localStorage.setItem(
             "expirationDateTime",
-            response.data.token.expiration
+            response.data.resultData.token.expiration
           );
 
-          localStorage.setItem("userId", response.data.user.id);
+          localStorage.setItem("userId", response.data.resultData.user.id);
 
-          dispatch(authSuccess(response.data));
+          dispatch(authSuccess(response.data.resultData));
         }
         // dispatch(checkAuthTimeout(response.data.token.expiration));
         //dispatch(checkAuthTimeout(response.data.expiresIn));

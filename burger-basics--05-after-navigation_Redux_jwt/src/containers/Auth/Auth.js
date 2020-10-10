@@ -179,6 +179,7 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
     if (!this.props.loading) {
       formWithElements = formElementsArray.map((item) => {
         return (
+        [<label>{item.config.elementConfig.placeholder}</label>,
           <Input
             key={item.id}
             invalid={!item.config.valid}
@@ -189,7 +190,7 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
             value={item.config.value}
             shouldValidate={item.config.validation && item.config.touched}
             changed={(event) => this.inputChangedHandler(event, item.id)}
-          ></Input>
+          ></Input>]
         );
       });
     }
@@ -218,7 +219,7 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
       if( this.props.building) 
       form = <Redirect to={this.props.redirectPath}></Redirect>
       else
-      form = <Redirect to='/'></Redirect>
+      form = <Redirect to='/orders'></Redirect>
     }
 
     return (

@@ -37,7 +37,7 @@ export const initIngredientsFailed = () => {
 export const initIngredientsFromServer = (token) => {
 
     return (dispatch) => {     
-       ;debugger
+      // ;debugger
         let  jwtConfig=null;
          
         jwtConfig = {

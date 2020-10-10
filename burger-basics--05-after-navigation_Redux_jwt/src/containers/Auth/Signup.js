@@ -123,7 +123,8 @@ class Signup extends Component {
     formIsValid: false,
     loading: false,
     isNewIdCard: false,
-    error: "",
+    message: "",
+    errorStatus:false
   };
 
   checkValidity(value, rules) {
@@ -213,15 +214,15 @@ class Signup extends Component {
       .post(url, formData, axiosConfig)
       .then((response) => {
         console.log(response);
-        this.setState({ loading: false });
+        this.setState({ loading: false , errorStatus:true,  message:response.data.resultExplanation});
       })
       .catch((error) => {
         debugger;
         console.log(error);
         if (error.response != null || error.response !== undefined)
-          this.setState({ error: error.response.message, loading: false });
-        // dispatch(signupFailed(error.response.data.error));
-        else this.setState({ error: "Bağlantı hatası!", loading: false });
+          this.setState({ errorStatus:true,  message: error.response.message, loading: false });      
+        else 
+          this.setState({ errorStatus:true, message : "Bağlantı Hatası:"+error, loading: false });
       });
   };
 
@@ -303,10 +304,9 @@ class Signup extends Component {
     }
 
     let errorDiv = null;
-    if (this.state.error) {
-      errorDiv = <div>ERROR On Login ! {this.state.error.message}</div>;
+    if (this.state.errorStatus) {
+      errorDiv = <div>{this.state.message}</div>;
     }
-
     let form = (
       <form onSubmit={this.signupHandler}>
         <div
@@ -345,10 +345,10 @@ class Signup extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.authReducer.loading,
-    error: state.authReducer.error,
+   // loading: state.authReducer.loading,
+   // error: state.authReducer.error,
     isAuthenticated: state.authReducer.userId !== null,
-    building: state.burgerReducer.building,
+   // building: state.burgerReducer.building,
     redirectPath: state.authReducer.authRedirectPath,
   };
 };

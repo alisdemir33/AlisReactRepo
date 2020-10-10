@@ -60,12 +60,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
                      * 1000
                   ); */
 
-                  localStorage.setItem("accessToken", res.token.accessToken);
-                  localStorage.setItem("refreshToken", res.token.refreshToken);
-                  localStorage.setItem("expirationDateTime", res.token.expiration);                
+                  localStorage.setItem("accessToken", res.resultData.token.accessToken);
+                  localStorage.setItem("refreshToken", res.resultData.token.refreshToken);
+                  localStorage.setItem("expirationDateTime", res.resultData.token.expiration);                
 
-                  originalReq.headers["Token"] = res.token.accessToken;
-                  originalReq.headers.Authorization  = "Bearer "+res.token.accessToken;
+                  originalReq.headers["Token"] = res.resultData.token.accessToken;
+                  originalReq.headers.Authorization  = "Bearer "+res.resultData.token.accessToken;
                   originalReq.headers["Device"] = "device";
 
                   return axios(originalReq);

@@ -9,6 +9,7 @@ import Logout from "./containers/Auth/Logout/Logout";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import Signup from "./containers/Auth/Signup";
+import AnnouncementList from "./containers/Announcements/AnnouncementList";
 
 class App extends Component {
   componentDidMount() {
@@ -20,7 +21,9 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/auth" component={Auth} />  
-        <Route path="/signup" component={Signup} />              
+        <Route path="/signup" component={Signup} /> 
+        <Route path="/ilanlistesi" component={AnnouncementList} />   
+        <Route path="/" component={Auth} />             
         <Redirect to ='/'></Redirect>
       </Switch>
     );
@@ -30,10 +33,12 @@ class App extends Component {
         <Switch>
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
+          <Route path="/burgerbuilder" component={BurgerBuilder} />
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={Auth} />  
-          <Route path="/signup" component={Signup} />         
-          <Route path="/" component={BurgerBuilder} />
+          <Route path="/signup" component={Signup} />   
+               
+          <Route path="/" component={Auth} />
           <Redirect to ='/'></Redirect>
         </Switch>
       );
