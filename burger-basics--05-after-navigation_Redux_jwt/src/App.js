@@ -21,8 +21,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/auth" component={Auth} />  
-        <Route path="/signup" component={Signup} /> 
-        <Route path="/ilanlistesi" component={AnnouncementList} />   
+        <Route path="/signup" component={Signup} />        
         <Route path="/" component={Auth} />             
         <Redirect to ='/'></Redirect>
       </Switch>
@@ -31,13 +30,13 @@ class App extends Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
+          <Route path="/announcementlist" component={AnnouncementList} />   
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
           <Route path="/burgerbuilder" component={BurgerBuilder} />
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={Auth} />  
-          <Route path="/signup" component={Signup} />   
-               
+          <Route path="/signup" component={Signup} /> 
           <Route path="/" component={Auth} />
           <Redirect to ='/'></Redirect>
         </Switch>

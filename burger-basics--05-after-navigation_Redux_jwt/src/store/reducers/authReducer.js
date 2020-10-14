@@ -37,6 +37,7 @@ const authStart = (state, action) => {
     });
 }
 const authSuccess = (state, action) => {
+ ;debugger
   return updateObject(state,
     {
       userId: action.payload.user.id,

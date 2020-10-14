@@ -219,7 +219,7 @@ const clonedFormElement = updateObject(this.state.loginForm[inputIdentifier],
       if( this.props.building) 
       form = <Redirect to={this.props.redirectPath}></Redirect>
       else
-      form = <Redirect to='/orders'></Redirect>
+      form = <Redirect to='/announcementlist'></Redirect>
     }
 
     return (

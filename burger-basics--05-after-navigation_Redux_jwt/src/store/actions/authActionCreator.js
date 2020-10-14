@@ -76,7 +76,7 @@ export const authAttempt = (username, password, isSignUp) => {
            * 1000
         ); */
 
-        debugger;
+       
 
         if (response.data.resultCode === 1) {
           dispatch(authFailed(response.data.resultExplanation));
@@ -88,9 +88,9 @@ export const authAttempt = (username, password, isSignUp) => {
             "expirationDateTime",
             response.data.resultData.token.expiration
           );
-
+          debugger;
           localStorage.setItem("userId", response.data.resultData.user.id);
-
+         
           dispatch(authSuccess(response.data.resultData));
         }
         // dispatch(checkAuthTimeout(response.data.token.expiration));

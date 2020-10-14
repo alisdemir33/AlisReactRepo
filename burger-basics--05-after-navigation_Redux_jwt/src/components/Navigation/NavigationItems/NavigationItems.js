@@ -9,7 +9,7 @@ const navigationItems = (props) => {
     <ul className={classes.NavigationItems}>
       {props.isAuthenticated
         ? [
-            <NavigationItem link="/orders">Siparişler</NavigationItem>,
+            <NavigationItem link="/announcementlist">İlan Listesi</NavigationItem>,
             <NavigationItem exact link="/burgerbuilder">
               Burger Builder
             </NavigationItem>,

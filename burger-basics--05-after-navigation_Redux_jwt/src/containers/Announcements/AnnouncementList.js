@@ -1,51 +1,128 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import Announcement from '../../components/Announcement/Announcement';
+import classes from "../Announcements/AnnouncementList.css"
 
- class AnnouncementList extends Component {
-   
-    componentDidMount() {
-        console.log('ORders will be fetched..')
-       //  this.props.onFetchOrders(this.props.userId);
-     
-        // console.log('ilans fetched..')
-         
-         
-         let url = "https://localhost:44384/sample/GetIlanList";
+class AnnouncementList extends Component {
 
-         let axiosConfig = {
-            headers: {
-              "Content-Type": "application/json;charset=UTF-8",
-              "Access-Control-Allow-Origin": "*",
-            },
-          };
-      
-         
-          axios
-          .get(url,axiosConfig)
-          .then((response) => {
-            console.log(response);
-           // this.setState({ loading: false , errorStatus:true,  message:response.data.resultExplanation});
-          })
-          .catch((error) => {
-           // debugger;
-            console.log(error);
-          
-          });
-      };
-     
-       
-      
+  state = {
+    announcementList:[],
+    loading:false,
+    error:false
+  }
+
+  componentDidMount() {
+    console.log("Annos will be fetched..");
+    //  this.props.onFetchOrders(this.props.userId);
+
+    // console.log('ilans fetched..')
+
+    let url = "https://localhost:44384/sample/GetIlanList";
+
+    const jwtConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+         Authorization: "Bearer " + localStorage.getItem("accessToken")//token.accessToken
+      }
+   }
+    
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+
+    this.setState({loading:true});
+
+    axios
+      .get(url, jwtConfig)
+      .then((response) => {
+        console.log(response);
+         this.setState({loading:false, announcementList:response.data.resultData});
+      })
+      .catch((error) => {
+        if (error.response != null || error.response !== undefined)
+        this.setState({ errorStatus:true,  message: error.response.message, loading: false });      
+      else 
+        this.setState({ errorStatus:true, message : "Bağlantı Hatası:"+error, loading: false });
+      });
+  }
+
+  toggleRowVisibility = (talepNo) =>{
    
-   
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
+ let newlist = this.state.announcementList.map( anno =>{
+ 
+  if(anno.iseAlimTalebiNoField!==talepNo){         
+  return anno;}
+     else
+     {
+          anno.Visibility =!anno.Visibility;        
+          return anno;
+     }
+   })
+  this.setState({announcementList:newlist});
+  }
+
+
+
+  render() {
+
+    let announcementPlaceHolder =<Spinner/>
+    if(!this.state.loading){
+      announcementPlaceHolder = this.state.announcementList.map( (announcement) =>{
+            return <Announcement 
+              currAnnouncement={announcement} toggleVisibility={this.toggleRowVisibility}
+
+            />
+        } ) 
     }
+
+
+    return (
+      <div>
+        <table>
+          <tbody>                 
+            <tr key={0}>
+              <td colspan={7}>
+                <b>İLAN LİSTESİ</b>
+              </td>
+            </tr>
+            <tr key={1}>
+              <th>İlan No</th>
+              <th>İl</th>
+              <th>İlçe</th>
+              <th>Son Başvuru Tarihi</th>
+              <th>Evrak Son Teslim Tarihi</th>
+              <th>Çalışma Şekli</th>
+              <th></th>
+            </tr>
+            
+            {announcementPlaceHolder}
+
+         {/*    <tr>
+              <td>Alfreds Futterkiste</td>
+              <td>Maria Anders</td>
+              <td>Germany</td>
+              <td>Maria Anders</td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td>Centro comercial Moctezuma</td>
+              <td>Francisco Chang</td>
+              <td>Mexico</td>
+              <td>Maria Anders</td>
+              <td>Germany</td>
+            </tr> */}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
-export default (withErrorHandler( AnnouncementList,axios));
+export default withErrorHandler(AnnouncementList, axios);
