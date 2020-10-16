@@ -69,6 +69,16 @@ class AnnouncementList extends Component {
   }
 
 
+  redirectToApply = ( anno) =>{
+
+   
+    this.props.history.push({
+      pathname: '/applytoannouncement',
+      state : {annos:anno}
+     }); 
+  }
+
+
 
   render() {
 
@@ -76,12 +86,12 @@ class AnnouncementList extends Component {
     if(!this.state.loading){
       announcementPlaceHolder = this.state.announcementList.map( (announcement) =>{
             return <Announcement 
-              currAnnouncement={announcement} toggleVisibility={this.toggleRowVisibility}
-
+              currAnnouncement={announcement} 
+              toggleVisibility={this.toggleRowVisibility}
+              redirToApply={this.redirectToApply}
             />
         } ) 
     }
-
 
     return (
       <div>
@@ -100,24 +110,8 @@ class AnnouncementList extends Component {
               <th>Evrak Son Teslim Tarihi</th>
               <th>Çalışma Şekli</th>
               <th></th>
-            </tr>
-            
+            </tr>            
             {announcementPlaceHolder}
-
-         {/*    <tr>
-              <td>Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
-            </tr>
-            <tr>
-              <td>Centro comercial Moctezuma</td>
-              <td>Francisco Chang</td>
-              <td>Mexico</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
-            </tr> */}
           </tbody>
         </table>
       </div>

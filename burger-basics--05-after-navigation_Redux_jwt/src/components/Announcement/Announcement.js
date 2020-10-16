@@ -15,7 +15,8 @@ class Announcement extends React.Component {
   
     
 render (){
-  return (
+ 
+    return (
     [
       <tr key={this.props.currAnnouncement.iseAlimTalebiNoField}>
         <td>{this.props.currAnnouncement.iseAlimTalebiNoField}</td>
@@ -25,7 +26,9 @@ render (){
         <td>{this.props.currAnnouncement.belgeTeslimTarihiField}</td>
         <td>{this.props.currAnnouncement.calismaSekliField}</td>
         <td>
-          <Button btnType="Success">Başvur</Button>
+          {/* <Button clicked ={() => this.props.redirToApply(this.props.currAnnouncement.iseAlimTalebiNoField,ilanOzet)}  */}
+          <Button clicked ={() => this.props.redirToApply(this.props.currAnnouncement)} 
+          btnType="Success">Başvur</Button>
           <Button clicked={ ()=>this.props.toggleVisibility(this.props.currAnnouncement.iseAlimTalebiNoField)} 
           btnType="Danger">
             Detay {this.props.currAnnouncement.Visibility? 'Gizle':'Göster'}

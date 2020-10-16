@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import Signup from "./containers/Auth/Signup";
 import AnnouncementList from "./containers/Announcements/AnnouncementList";
+import ApplyToAnnouncement from "./containers/ApplyToAnnouncement/ApplyToAnnouncement";
 
 class App extends Component {
   componentDidMount() {
@@ -37,6 +38,7 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={Auth} />  
           <Route path="/signup" component={Signup} /> 
+          <Route path="/applytoannouncement" component={ApplyToAnnouncement} /> 
           <Route path="/" component={Auth} />
           <Redirect to ='/'></Redirect>
         </Switch>

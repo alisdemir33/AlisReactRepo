@@ -37,10 +37,10 @@ const authStart = (state, action) => {
     });
 }
 const authSuccess = (state, action) => {
- ;debugger
+
   return updateObject(state,
     {
-      userId: action.payload.user.id,
+      userId: action.payload,
       //token: action.payload.token,
       error:null,
       loading: false

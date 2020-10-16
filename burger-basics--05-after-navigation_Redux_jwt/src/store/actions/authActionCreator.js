@@ -76,25 +76,16 @@ export const authAttempt = (username, password, isSignUp) => {
            * 1000
         ); */
 
-       
-
         if (response.data.resultCode === 1) {
           dispatch(authFailed(response.data.resultExplanation));
         }
         else {
           localStorage.setItem("accessToken", response.data.resultData.token.accessToken);
           localStorage.setItem("refreshToken",response.data.resultData.token.refreshToken);
-          localStorage.setItem(
-            "expirationDateTime",
-            response.data.resultData.token.expiration
-          );
-          debugger;
-          localStorage.setItem("userId", response.data.resultData.user.id);
-         
-          dispatch(authSuccess(response.data.resultData));
-        }
-        // dispatch(checkAuthTimeout(response.data.token.expiration));
-        //dispatch(checkAuthTimeout(response.data.expiresIn));
+          localStorage.setItem( "expirationDateTime",response.data.resultData.token.expiration);       
+          localStorage.setItem("userId", response.data.resultData.user.id);         
+          dispatch(authSuccess({userId :response.data.resultData.user.id}));
+        }   
       })
       .catch((error) => {
         debugger;
@@ -123,8 +114,7 @@ export const authCheckState = () => {
         dispatch(logOut());
       } else {
         dispatch(
-          authSuccess({
-            idToken: token,
+          authSuccess({           
             userId: localStorage.getItem("userId"),
           })
         );
