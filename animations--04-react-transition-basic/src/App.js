@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Transition from "react-transition-group/Transition";
 
 import "./App.css";
-import Modal from "./components/Modal/Modal";
+import Modal from "./components/Modal/ModalCSSTrans";
 import Backdrop from "./components/Backdrop/Backdrop";
 import List from "./components/List/List";
 
@@ -47,12 +47,12 @@ class App extends Component {
                 transition: 'opacity 1s ease-out',
                 opacity: state === 'exiting' ? 0 : 1
               }}
-            />
+            >{state}asd</div>
           )}
         </Transition>
-        {this.state.modalIsOpen ? (
-          <Modal show={this.state.modalIsOpen} closed={this.closeModal} />
-        ) : null}
+      
+        <Modal show={this.state.modalIsOpen} closed={this.closeModal} />
+       
         {this.state.modalIsOpen ? (
           <Backdrop show={this.state.modalIsOpen} />
         ) : null}
