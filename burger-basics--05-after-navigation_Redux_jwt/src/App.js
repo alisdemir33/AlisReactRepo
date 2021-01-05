@@ -19,6 +19,7 @@ class App extends Component {
   }
 
   render() {
+
     let routes = (
       <Switch>
         <Route path="/auth" component={Auth} />  
@@ -27,7 +28,7 @@ class App extends Component {
         <Redirect to ='/'></Redirect>
       </Switch>
     );
-
+   
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
@@ -39,7 +40,7 @@ class App extends Component {
           <Route path="/auth" component={Auth} />  
           <Route path="/signup" component={Signup} /> 
           <Route path="/applytoannouncement" component={ApplyToAnnouncement} /> 
-          <Route path="/" component={Auth} />
+         {<Route path="/" component={Auth} /> }
           <Redirect to ='/'></Redirect>
         </Switch>
       );
@@ -55,7 +56,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.authReducer.userId !== null,
+    isAuthenticated: state.authReducer.user !== null,
   };
 };
 

@@ -83,8 +83,11 @@ export const authAttempt = (username, password, isSignUp) => {
           localStorage.setItem("accessToken", response.data.resultData.token.accessToken);
           localStorage.setItem("refreshToken",response.data.resultData.token.refreshToken);
           localStorage.setItem( "expirationDateTime",response.data.resultData.token.expiration);       
-          localStorage.setItem("userId", response.data.resultData.user.id);         
-          dispatch(authSuccess({userId :response.data.resultData.user.id}));
+          localStorage.setItem("personelID", response.data.resultData.user.personelID);         
+          
+        //  ;debugger
+          dispatch(authSuccess(response.data.resultData.user));
+
         }   
       })
       .catch((error) => {
@@ -100,8 +103,8 @@ export const authAttempt = (username, password, isSignUp) => {
 //App den sayfa reload olunca reduxtan uçan token bilgisi local storage dan kontrol ediliyor..
 export const authCheckState = () => {
   return (dispatch) => {
+  
     const token = localStorage.getItem("accessToken");
-
     if (!token) {
       dispatch(logOut());
     } else {
@@ -115,7 +118,7 @@ export const authCheckState = () => {
       } else {
         dispatch(
           authSuccess({           
-            userId: localStorage.getItem("userId"),
+            userId: localStorage.getItem("personelID"),
           })
         );
         //  dispatch(checkAuthTimeout((expirationDate.getTime() - (new Date().getTime()))/1000));
@@ -145,7 +148,7 @@ export const setAuthRedirectPath = (path) => {
 export const logOut = () => {
   //localStorage.removeItem("token");
   localStorage.removeItem("expirationDateTime");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("personelID");
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 

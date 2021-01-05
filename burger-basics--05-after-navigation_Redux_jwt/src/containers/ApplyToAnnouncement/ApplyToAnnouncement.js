@@ -1,43 +1,52 @@
 import React, { Component } from "react";
 import { updateObject } from "../../shared/util";
 import { checkValidity } from "../../shared/validityCheck";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./ApplyToAnnouncement.css";
+import axios from "axios";
+import { connect } from 'react-redux';
 //import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
- class ApplyToAnnouncement extends Component {
+class ApplyToAnnouncement extends Component {
+  
   constructor(props) {
     super(props);
+    this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.saveApplicationHandler=this.saveApplicationHandler.bind(this);
+  }
     //   this.state = {isToggleOn: true};
 
     // This binding is necessary to make `this` work in the callback
-    this.toggleVisibility = this.toggleVisibility.bind(this);
+   
 
-    this.state = {
+    state = {
       aciklamaVisible: true,
-      anno: null,
+      announcement: null,
+      message:null,
       // ilanNo: 0,
       // ilanOzet: "",
       loading: false,
 
       signUpForm: {
-        egitimDurum: {
+        EgitimDurumu: {
           elementType: "select",
           elementConfig: {
+            placeholder: "Mezuniyet",
             options: [
               { value: "UNIVERSITE", displayValue: "ÜNİVERSİTE" },
               { value: "YUKSEK_LISANS", displayValue: "YÜKSEK LİSANS" },
               { value: "DOKTORA", displayValue: "DOKTORA" },
             ],
           },
-          value: "fastest",
+          value: "UNIVERSITE",
           validation: {},
           valid: true,
         },
 
-        mezuniyetTarihi: {
+        MezuniyetTarihi: {
           elementType: "input",
           elementConfig: {
             type: "text",
@@ -53,22 +62,24 @@ import classes from "./ApplyToAnnouncement.css";
           valid: false,
         },
 
-        kpssYili: {
+        KpssGirisYili: {
           elementType: "select",
           elementConfig: {
+            placeholder: "KPSS Yılı",
             options: [
-              { value: "2019", displayValue: "2019" },
+              { value: "2014", displayValue: "2014" },
               { value: "2020", displayValue: "2020" },
             ],
           },
-          value: "2019",
+          value: "2014",
           validation: {},
           valid: true,
         },
 
-        askerlikDurum: {
+        AskerlikDurumu: {
           elementType: "select",
           elementConfig: {
+            placeholder: "Askerlik Durumu",
             options: [
               { value: "MUAF", displayValue: "MUAF" },
               { value: "YAPTI", displayValue: "YAPTI" },
@@ -81,7 +92,7 @@ import classes from "./ApplyToAnnouncement.css";
           valid: true,
         },
 
-        bolum: {
+        UniversiteBolumu: {
           elementType: "input",
           elementConfig: {
             type: "text",
@@ -90,29 +101,28 @@ import classes from "./ApplyToAnnouncement.css";
           value: "",
           touched: false,
           validation: {
-            required: true,
-            isNumeric: true,
+            required: true,           
           },
           valid: false,
         },
 
-        kpssPuan: {
+        KpssPuani: {
           elementType: "input",
           elementConfig: {
             type: "text",
             placeholder: "KPSS Puanı",
           },
 
-          value: "",
+          value: "76,44835",
           touched: false,
           validation: {
             required: true,
-            isNumeric: false,
+            isDouble: true,
           },
           valid: false,
         },
 
-        tecilTarihi: {
+        TecilTarihi: {
           elementType: "input",
           elementConfig: {
             type: "text",
@@ -121,13 +131,13 @@ import classes from "./ApplyToAnnouncement.css";
           value: "",
           touched: false,
           validation: {
-            required: true,
+            required: false,
             isNumeric: false,
           },
           valid: false,
         },
 
-        email: {
+        EPosta: {
           elementType: "email",
           elementConfig: {
             type: "text",
@@ -141,7 +151,7 @@ import classes from "./ApplyToAnnouncement.css";
           },
           valid: false,
         },
-        cepTelefonu: {
+        CepTelNumarasi: {
           elementType: "input",
           elementConfig: {
             type: "text",
@@ -151,11 +161,11 @@ import classes from "./ApplyToAnnouncement.css";
           touched: false,
           validation: {
             required: true,
-            isEmail: true,
+            isNumeric: true,
           },
           valid: false,
         },
-        evTelefonu: {
+        EvTelNumarasi: {
           elementType: "input",
           elementConfig: {
             type: "text",
@@ -170,7 +180,7 @@ import classes from "./ApplyToAnnouncement.css";
           valid: false,
         },
 
-        isTelefonu: {
+        IsTelNumarasi: {
           elementType: "email",
           elementConfig: {
             type: "text",
@@ -178,28 +188,26 @@ import classes from "./ApplyToAnnouncement.css";
           },
           value: "",
           touched: false,
-          validation: {
-            required: true,
-            isEmail: true,
+          validation: {          
+            isNumber: true,
           },
           valid: false,
         },
-      },
-    };
+      },    
   }
 
   componentDidMount() {
-    console.log('COMPNENT DID MOUNT!!!')
-    if (this.state.anno == null && this.props.location.state != null) {     
+    console.log("COMPNENT DID MOUNT!!!");
+    if (this.state.announcement == null && this.props.location.state != null) {
+   ;debugger
       this.setState({
-        anno: this.props.location.state.annos,
+        announcement: this.props.location.state.announcement
       });
     }
   }
 
-  toggleVisibility = () => {
-    //this.setState({ aciklamaVisible: !this.state.aciklamaVisible });
-    debugger;
+  toggleVisibility = (event) => {
+    event.preventDefault();
     this.setState((prevState) => ({
       aciklamaVisible: !prevState.aciklamaVisible,
     }));
@@ -231,18 +239,82 @@ import classes from "./ApplyToAnnouncement.css";
     this.setState({ signUpForm: formCopy, formIsValid: formIsValid });
   };
 
+  saveApplicationHandler = (event) => {
+    
+    ;debugger
+    event.preventDefault();
+
+    this.setState({ loading: true });
+
+   // let s=this.state.announcement;
+
+    const formData = {};
+    for (let formElemIdentifier in this.state.signUpForm) {
+      formData[formElemIdentifier] = this.state.signUpForm[
+        formElemIdentifier
+      ].value;
+    }
+    //personelalim db insert için
+    formData['IlanID']=this.state.announcement.iseAlimTalebiNoField;
+    formData['IlanIlID']=this.state.announcement.ilanIlID;
+    formData['IlanIlceID']=this.state.announcement.ilanIlceID;
+    formData['UnvanID']=this.state.announcement.unvanField; 
+    formData['PersonelID']='0';//redux...
+    formData['BasvuruNo']=////insert olduğu için 0 giriyoruz; güncelleme olur ise 0 dan farklı olacak'234234';   
+   
+    formData['Ip']='127.0.0.1';
+
+    //web servise göndermek için
+    formData['TcKimlikNo']=this.props.user.tcKimlikNo; //redux
+    formData['Ad']=this.props.user.name;//redux
+    formData['Soyad']= this.props.user.surname;//'Soyadfromrdx';//redux
+    formData['Cinsiyet']= this.props.user.cinsiyet;//'rdxCinsiyet';  //redux
+    formData['DogumTarihi']= new Date(this.props.user.dogumTarihi);// new Date('10.10.2033'); //redux
+    formData['DogumYeri']= this.props.user.dogumYeri; //'trss';    //redux
+    formData['MedeniDurumu']= this.props.user.medeniDurumu;//'bekar';//redux
+
+
+    //redux store dan formda olmayan kişi bilgileri alınıp form dataya eklenecek...
+
+    let url = "https://localhost:44384/sample/SaveApplication";
+
+     const jwtConfig = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+           Authorization: "Bearer " + localStorage.getItem("accessToken")//token.accessToken
+        }
+    };
+
+    axios
+      .post(url, formData, jwtConfig)
+      .then((response) => {
+        console.log(response);        
+        this.setState({ loading: false , message:response.data.resultExplanation});
+      })
+      .catch((error) => {
+        debugger;
+        console.log(error);
+        if (error.response != null || error.response !== undefined)
+          this.setState({ errorStatus:true,  message: error.response.message, loading: false });      
+        else 
+          this.setState({ errorStatus:true, message : "Bağlantı Hatası:"+error, loading: false });
+      });
+  };
+
   render() {
     let mainFormBody = <Spinner></Spinner>;
     let formWithElements = <Spinner></Spinner>;
     let ilanOzet;
     let bilgisayarBilgisiGerekli;
-    let  bolumGerekli;
-    let  dilGerekli;
-    let  surucuBelgesiGerekli;
-    let  ilGerekli;
-    let  ilceGerekli;
-    let  ilanDetayInfo=<div></div>;
-    let  aciklama;
+    let bolumGerekli;
+    let dilGerekli;
+    let surucuBelgesiGerekli;
+    let ilGerekli;
+    let ilceGerekli;
+    let ilanDetayInfo = <div></div>;
+    let aciklama;
+
 
     const formElementsArray = [];
     for (let key in this.state.signUpForm) {
@@ -252,64 +324,68 @@ import classes from "./ApplyToAnnouncement.css";
       });
     }
 
-    if (this.state.anno != null) {
-      ilanOzet =
-        this.state.anno.baslikField +
-        " " +
-        this.state.anno.cityField +
-        "-" +
-        this.state.anno.districtField +
-        " / " +
-        this.state.anno.unvanField +
-        " (" +
-        this.state.anno.calismaSekliField +
-        ")";
+    if (this.state.announcement != null) {
+      ilanOzet = (
+        <b>
+          {this.state.announcement.baslikField}
+          {this.state.announcement.cityField}- {this.state.announcement.districtField}/{" "}
+          {this.state.announcement.unvanField}( {this.state.announcement.calismaSekliField})
+        </b>
+      );
     }
-    debugger;
-    if (this.state.anno != null && this.state.aciklamaVisible) {
-      if (this.state.anno.bilgisayarBilgisiGerekliField) {
-        bilgisayarBilgisiGerekli = (
-          <li>{this.state.anno.bilgisayarBilgisiAciklamasiField}</li>
-        );
+    
+
+    if (this.state.announcement != null && this.state.aciklamaVisible) {
+      
+      if (this.state.announcement.bilgisayarBilgisiGerekliField) {
+        bilgisayarBilgisiGerekli =<li>{this.state.announcement.bilgisayarBilgisiAciklamasiField}</li>        
+      }
+      if (this.state.announcement.bolumGerekliField) {
+        bolumGerekli = <li>{this.state.announcement.bolumAciklamasiField}</li>;
+      }
+      if (this.state.announcement.dilGerekliField) {
+        dilGerekli = <li>{this.state.announcement.dilAciklamasiField}</li>;
+      }
+      if (this.state.announcement.surucuBelgesiGerekliField) {
+        surucuBelgesiGerekli =<li>{this.state.announcement.surucuBelgesiAciklamasiField}</li>        
+      }
+      if (this.state.announcement.ilGerekliField) {
+        ilGerekli = <li>{this.state.announcement.ilGerekliField}</li>;
+      }
+      if (this.state.announcement.ilceGerekliField) {
+        ilceGerekli = <li>{this.state.announcement.ilceGerekliField}</li>;
+      }   
+      if (this.state.announcement.aciklamaField) {
+        aciklama = <div>
+           <b> Açıklama Metni </b> <p>{this.state.announcement.aciklamaField}</p>;
+        </div>
       }
 
-      if (this.state.anno.bolumGerekliField) {
-        bolumGerekli = <li>{this.state.anno.bolumAciklamaField}</li>;
-      }
-      if (this.state.anno.dilGerekliField) {
-        dilGerekli = <li>{this.state.anno.dilAciklamaField}</li>;
-      }
-      if (this.state.anno.surucuBelgesiGerekliField) {
-        surucuBelgesiGerekli = (
-          <li>{this.state.anno.surucuBelgesiGerekliField}</li>
-        );
-      }
-      if (this.state.anno.ilGerekliField) {
-        ilGerekli = <li>{this.state.anno.ilGerekliField}</li>;
-      }
-      if (this.state.anno.ilceGerekliField) {
-        ilceGerekli = <li>{this.state.anno.ilceGerekliAciklamaField}</li>;
-      }
-      if (this.state.anno.ilceGerekliField) {
-        ilceGerekli = <li>{this.state.anno.ilceGerekliAciklamaField}</li>;
-      }
-      if (this.state.anno.aciklamaField) {
-        ilceGerekli = <li>{this.state.anno.aciklamaField}</li>;
-      }
-      debugger;
       if (this.state.aciklamaVisible) {
         ilanDetayInfo = (
-          <div>
-            <ul>
+           
+            <table>
+            <tr>
+                <td>
+                    <h3>İlan Şartları</h3>
+                </td>
+                </tr>
+                <tr>
+                <td> <ul>
               {bilgisayarBilgisiGerekli}
               {bolumGerekli}
               {dilGerekli}
               {surucuBelgesiGerekli}
               {ilGerekli}
-              {ilceGerekli}
-              {aciklama}
-            </ul>
-          </div>
+              {ilceGerekli}             
+            </ul></td>            
+            </tr>
+            <tr><td> {aciklama}</td></tr>
+        </table>
+           
+           
+           
+         
         );
       }
     }
@@ -317,7 +393,8 @@ import classes from "./ApplyToAnnouncement.css";
     if (!this.state.loading) {
       formWithElements = formElementsArray.map((item) => {
         return (
-          <Input
+            [<label>{item.config.elementConfig.placeholder}</label>,
+            <Input
             key={item.id}
             invalid={!item.config.valid}
             touched={item.config.touched}
@@ -327,16 +404,16 @@ import classes from "./ApplyToAnnouncement.css";
             value={item.config.value}
             shouldValidate={item.config.validation && item.config.touched}
             changed={(event) => this.inputChangedHandler(event, item.id)}
-          ></Input>
+          ></Input>]
         );
       });
 
       mainFormBody = <div>{formWithElements}</div>;
     }
 
-    let errorDiv = null;
-    if (this.state.errorStatus) {
-      errorDiv = <div>{this.state.message}</div>;
+    let messageDiv = null;
+    if (this.state.message!== null) {
+      messageDiv = <div>{this.state.message}</div>;
     }
     let form = (
       <form onSubmit={this.signupHandler}>
@@ -352,19 +429,27 @@ import classes from "./ApplyToAnnouncement.css";
         >
           YENİ ÜYE KAYIT FORMU
         </div>
-        {ilanOzet}
+        {ilanOzet} 
         <Button clicked={this.toggleVisibility} btnType="Danger">
           Açıklamaları {this.state.aciklamaVisible ? "Gizle" : "Göster"}
         </Button>
         {ilanDetayInfo}
         {mainFormBody}
-        <Button btnType="Success">KAYDET</Button>
-        {errorDiv}
+        <Button clicked={this.saveApplicationHandler} btnType="Success">KAYDET</Button>
+        {messageDiv}
       </form>
     );
 
     return <div className={classes.ApplicationForm}>{form}</div>;
   }
+
 }
 
-export default ApplyToAnnouncement;
+const mapStateToProps = (state) => {
+  return {   
+    isAuthenticated: state.authReducer.user !== null,
+    user:state.authReducer.user
+  }
+}
+
+export default connect(mapStateToProps, null) ( withErrorHandler(ApplyToAnnouncement,axios));

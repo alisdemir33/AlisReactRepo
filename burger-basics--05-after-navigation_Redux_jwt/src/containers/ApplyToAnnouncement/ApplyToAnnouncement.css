@@ -7,3 +7,11 @@
     padding :10px;
     box-sizing: border-box;
 }
+
+div.parent {
+	text-align: center;
+	}
+ul { 
+	display: inline-block; 
+	text-align: left; 
+	}

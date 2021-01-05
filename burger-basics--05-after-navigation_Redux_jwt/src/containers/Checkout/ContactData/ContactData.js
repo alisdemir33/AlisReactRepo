@@ -146,7 +146,7 @@ class ContactData extends Component {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
       orderData: formData,
-      userId:this.props.userId
+      userId:this.props.user.Id
     };
 
   /*   axios

@@ -10,7 +10,7 @@ class AnnouncementList extends Component {
   state = {
     announcementList:[],
     loading:false,
-    error:false
+    errorStatus:false
   }
 
   componentDidMount() {
@@ -46,15 +46,16 @@ class AnnouncementList extends Component {
          this.setState({loading:false, announcementList:response.data.resultData});
       })
       .catch((error) => {
+      ;debugger
         if (error.response != null || error.response !== undefined)
-        this.setState({ errorStatus:true,  message: error.response.message, loading: false });      
-      else 
-        this.setState({ errorStatus:true, message : "Bağlantı Hatası:"+error, loading: false });
+           this.setState({ errorStatus:true,  message: error.response.message, loading: false });      
+       else 
+           this.setState({ errorStatus:true, message : "Bağlantı Hatası:"+error, loading: false });
       });
   }
 
   toggleRowVisibility = (talepNo) =>{
-   
+   ;debugger
  let newlist = this.state.announcementList.map( anno =>{
  
   if(anno.iseAlimTalebiNoField!==talepNo){         
@@ -74,16 +75,24 @@ class AnnouncementList extends Component {
    
     this.props.history.push({
       pathname: '/applytoannouncement',
-      state : {annos:anno}
+      state : {announcement:anno}
      }); 
   }
-
-
 
   render() {
 
     let announcementPlaceHolder =<Spinner/>
-    if(!this.state.loading){
+    //;debugger
+    if(this.state.errorStatus){
+    return <div> {this.state.message}</div>
+    }
+   
+
+   if(this.state.loading){
+     return announcementPlaceHolder;
+   }
+   
+   if(!this.state.loading && this.state.announcementList!=null && this.state.announcementList.length>0){
       announcementPlaceHolder = this.state.announcementList.map( (announcement) =>{
             return <Announcement 
               currAnnouncement={announcement} 
@@ -91,6 +100,8 @@ class AnnouncementList extends Component {
               redirToApply={this.redirectToApply}
             />
         } ) 
+    }else{
+      announcementPlaceHolder = <div>Aktif İlan Bulunamadı!</div>
     }
 
     return (

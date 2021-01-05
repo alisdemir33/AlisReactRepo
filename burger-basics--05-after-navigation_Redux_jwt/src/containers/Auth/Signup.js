@@ -347,7 +347,7 @@ const mapStateToProps = (state) => {
   return {
    // loading: state.authReducer.loading,
    // error: state.authReducer.error,
-    isAuthenticated: state.authReducer.userId !== null,
+    isAuthenticated: state.authReducer.user !== null,
    // building: state.burgerReducer.building,
     redirectPath: state.authReducer.authRedirectPath,
   };

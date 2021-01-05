@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Modal from "../../components/UI/Modal/Modal";
 import Aux from "../AuxFolder/Auxi";
+import CodeError from "../../shared/CustomError"
 
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
@@ -52,24 +53,30 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 .then((res) => res.json())
                 .then((res) => {
                  
-                  ;debugger
-                  console.log('REsponse:'+res);
+                 // ;debugger
+                 // console.log('REsponse:'+res);
 
                 /*   const expirationDate = new Date(
                     new Date().getTime() + 300//response.data.expiresIn
                      * 1000
                   ); */
+                  if(res.resultData!=null){
 
                   localStorage.setItem("accessToken", res.resultData.token.accessToken);
                   localStorage.setItem("refreshToken", res.resultData.token.refreshToken);
-                  localStorage.setItem("expirationDateTime", res.resultData.token.expiration);                
+                  localStorage.setItem("expirationDateTime", res.resultData.token.expiration);
+                  localStorage.setItem("personelID", res.data.resultData.user.personelID);      
 
                   originalReq.headers["Token"] = res.resultData.token.accessToken;
                   originalReq.headers.Authorization  = "Bearer "+res.resultData.token.accessToken;
                   originalReq.headers["Device"] = "device";
 
                   return axios(originalReq);
-                });
+                  }else{                   
+                    throw new CodeError('Oturum Süresi Doldu, Lütfen Yeniden Giriş Yapınız!', 403);
+                  }
+                }   );
+              
 
               resolve(res);
             }
